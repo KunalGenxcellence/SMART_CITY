@@ -92,7 +92,6 @@ triggerConfirmationModal(content: any) {
 
 
 getRecevingItem( OrderID : any,content: any,receivingObj:any){
-  debugger;
   let createIndent = {
     order_id :  OrderID,
     page_no : '1',

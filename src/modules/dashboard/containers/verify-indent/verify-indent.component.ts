@@ -91,7 +91,6 @@ triggerConfirmationModal(content: any) {
 }
 
 getIndentLineItems( OrderID : any,content: any,indentObj:any){
-  debugger;
   let createIndent = {
     order_id :  OrderID,
     page_no : '1',
