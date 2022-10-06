@@ -10,4 +10,9 @@ import { UserService } from '@modules/auth/services';
 export class TopNavUserComponent implements OnInit {
     constructor(public userService: UserService) {}
     ngOnInit() {}
+
+
+    logout(){
+        localStorage.removeItem("user_details");
+    }
 }
