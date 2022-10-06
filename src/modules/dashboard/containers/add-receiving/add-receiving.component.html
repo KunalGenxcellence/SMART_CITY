@@ -42,10 +42,10 @@
                                                                 <div class="input-group">
                                                                     <select name="category" id="category"
                                                                         class="form-control" formControlName="category">
-                                                                        <option value="Plants">Plants</option>
-                                                                        <option value="Equipment" selected>Equipment
+                                                                        <option value="1">Plants</option>
+                                                                        <option value="1" selected>Equipment
                                                                         </option>
-                                                                        <option value="Fertilizers">Fertilizers</option>
+                                                                        <option value="1">Fertilizers</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('category').dirty || product.get('category').touched) && product.get('category').errors && product.get('category').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
@@ -57,9 +57,9 @@
                                                                 <div class="input-group">
                                                                     <select name="category" id="item"
                                                                         class="form-control" formControlName="itemName">
-                                                                        <option value="AXE">AXE</option>
-                                                                        <option value="Kachi">Bagud Kachi</option>
-                                                                        <option value="Broom">Broom</option>
+                                                                        <option value="1">AXE</option>
+                                                                        <option value="1">Bagud Kachi</option>
+                                                                        <option value="1">Broom</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('itemName').dirty || product.get('itemName').touched) && product.get('itemName').errors && product.get('itemName').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
@@ -83,9 +83,9 @@
                                                                 <div class="input-group">
                                                                     <select name="unit" id="unit" class="form-control"
                                                                         formControlName="unit">
-                                                                        <option value="Nos">Nos</option>
-                                                                        <option value="Kgs">Kgs</option>
-                                                                        <option value="Packet">Packet</option>
+                                                                        <option value="1">Nos</option>
+                                                                        <option value="1">Kgs</option>
+                                                                        <option value="1">Packet</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('unit').dirty || product.get('unit').touched) && product.get('unit').errors && product.get('unit').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
@@ -137,7 +137,7 @@
 
                             <div class="row g-3 mt-3">
                                 <div class="col-md-12 col-lg-12 text-right">
-                                    <button type="button" class="btn btn-primary btn-sm mr-2">Save</button>
+                                    <button type="button" class="btn btn-primary btn-sm mr-2"  (click)="addReceiving()">Save</button>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2">Cancel</button>
                                 </div>
                             </div>

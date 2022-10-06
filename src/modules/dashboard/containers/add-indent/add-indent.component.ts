@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IndentService } from '@modules/dashboard/services/indent.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,7 +14,7 @@ export class AddIndentComponent implements OnInit {
   indentInfo : FormGroup;
   indentOrderTypeId :number = 1;
 
-  constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService){
+  constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService, private router:Router){
     this.indentInfo = this.formBuilder.group({
       files:[],
       remarks : [],
@@ -84,6 +85,8 @@ export class AddIndentComponent implements OnInit {
         this.toastr.success('Indent Created Succesfully.', '', {
           timeOut: 3000,
         });
+        this.router.navigate(['dashboard/verifyIndent'])
+      
     },
     error =>{
       console.log(error);

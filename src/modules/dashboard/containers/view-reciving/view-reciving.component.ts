@@ -60,5 +60,11 @@ nextPage(page:number){
   //this.changeDetectorRef.detectChanges();
   this.getIndents(this.currentPage,this.pageSize);
 }
+pageSizeChanged(){
+  this.isLoading = true;
+  this.indentListResponse = null;
+  //this.changeDetectorRef.detectChanges();
+  this.getIndents(this.currentPage,this.pageSize);
+}
 
 }

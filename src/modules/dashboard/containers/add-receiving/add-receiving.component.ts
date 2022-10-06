@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IndentService } from '@modules/dashboard/services/indent.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,8 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AddReceivingComponent implements OnInit {
 
   indentInfo : FormGroup;
-
-  constructor(private formBuilder : FormBuilder,private toastr: ToastrService){
+  indentOrderTypeId :number = 2;
+  constructor(private formBuilder : FormBuilder,private toastr: ToastrService, private indentService:IndentService, private router:Router){
     this.indentInfo = this.formBuilder.group({
       files:[],
       remarks : [],
@@ -64,6 +66,34 @@ export class AddReceivingComponent implements OnInit {
   showError(){
     this.toastr.error('Fields Should not be empty !', '', {
       timeOut: 3000,
+    });
+  }
+
+
+  addReceiving(){
+
+    //console.log('data is ', this.indentInfo.value);
+    if(!this.indentInfo.valid){
+      return;
+    }
+    let indentData = this.indentInfo.value;
+    indentData['ordertype_id'] = this.indentOrderTypeId;
+    indentData['created_by'] = 2;
+    this.indentService.saveIndent(indentData).subscribe(response=>{
+        this.toastr.success('Indent Created Succesfully.', '', {
+          timeOut: 3000,
+        });
+        this.router.navigate(['dashboard/viewReceiving'])
+      
+    },
+    error =>{
+      console.log(error);
+      if(error.error){
+        console.log(error.message);
+        this.toastr.error(error.message, '', {
+          timeOut: 3000,
+        });
+      }
     });
   }
 }
