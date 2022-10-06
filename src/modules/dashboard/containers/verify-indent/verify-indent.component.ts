@@ -3,7 +3,7 @@ import { IndentService } from '@modules/dashboard/services/indent.service';
 import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives';
 import { Country } from '@modules/tables/models';
 import { CountryService } from '@modules/tables/services';
-import { NgbPaginationNumber } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,9 +20,10 @@ export class VerifyIndentComponent implements OnInit {
   total: number = 0;
   orderTypeId: number = 1;
   isLoading = false;
+  closeModal: string = "";
 
   constructor(
-    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef
+    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal
 ) {}
 
 ngOnInit() {
@@ -67,6 +68,24 @@ pageSizeChanged(){
   this.indentListResponse = null;
   //this.changeDetectorRef.detectChanges();
   this.getIndents(this.currentPage,this.pageSize);
+}
+
+private getDismissReason(reason: any): string {
+  if (reason === 1) {
+    return 'by pressing ESC';
+  } else if (reason === 0) {
+    return 'by clicking on a backdrop';
+  } else {
+    return  `with: ${reason}`;
+  }
+}
+
+triggerConfirmationModal(content: any) {
+  this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+    this.closeModal = `Closed with: ${res}`;
+  }, (res) => {
+    this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+  });
 }
 
 }

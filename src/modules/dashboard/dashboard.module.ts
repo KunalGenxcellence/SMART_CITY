@@ -27,6 +27,7 @@ import { AddIndentComponent } from './containers/add-indent/add-indent.component
 import { AddReceivingComponent } from './containers/add-receiving/add-receiving.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VerifyLineItemsComponent } from './containers/verify-line-items/verify-line-items.component';
 
 @NgModule({
     imports: [
@@ -40,7 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         TablesModule,HttpClientModule
     ],
     providers: [...dashboardServices.services, ...dashboardGuards.guards],
-    declarations: [...dashboardContainers.containers, ...dashboardComponents.components, VerifyIndentComponent, ViewRecivingComponent, AddIndentComponent, AddReceivingComponent],
+    declarations: [...dashboardContainers.containers, ...dashboardComponents.components, VerifyIndentComponent, ViewRecivingComponent, AddIndentComponent, AddReceivingComponent, VerifyLineItemsComponent],
     exports: [...dashboardContainers.containers, ...dashboardComponents.components],
 })
 export class DashboardModule {}
