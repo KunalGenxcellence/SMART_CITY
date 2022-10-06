@@ -21,6 +21,8 @@ export class ViewRecivingComponent implements OnInit {
   orderTypeId: number = 2;
   isLoading = false;
   closeModal: String = ""
+  createIndentList:any;
+  receivingObj:any
 
   constructor(
     private indentService:IndentService,
@@ -86,6 +88,26 @@ triggerConfirmationModal(content: any) {
   }, (res) => {
     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
   });
+}
+
+
+getRecevingItem( OrderID : any,content: any,receivingObj:any){
+  let createIndent = {
+    order_id :  OrderID,
+    page_no : '1',
+    record_limit : '10'
+   };
+   this.receivingObj = receivingObj;
+  this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
+    this.createIndentList = response;
+    this.isLoading = false;
+    this.triggerConfirmationModal(content);
+  },error =>{
+    console.log(error);
+    this.isLoading = false;
+  })
+  // this.triggerConfirmationModal(content);
+
 }
 
 }

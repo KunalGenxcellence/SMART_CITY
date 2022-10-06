@@ -21,6 +21,8 @@ export class VerifyIndentComponent implements OnInit {
   orderTypeId: number = 1;
   isLoading = false;
   closeModal: string = "";
+  createIndentList:any;
+  indentObj:any;
 
   constructor(
     private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal
@@ -86,6 +88,27 @@ triggerConfirmationModal(content: any) {
   }, (res) => {
     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
   });
+}
+
+getIndentLineItems( OrderID : any,content: any,indentObj:any){
+  let createIndent = {
+    order_id :  OrderID,
+    page_no : '1',
+    record_limit : '10'
+   };
+
+   this.indentObj = indentObj;
+  this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
+    this.createIndentList = response;
+    this.isLoading = false;
+    this.triggerConfirmationModal(content);
+
+  },error =>{
+    console.log(error);
+    this.isLoading = false;
+  })
+  
+
 }
 
 }

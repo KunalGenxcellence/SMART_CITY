@@ -23,4 +23,9 @@ export class IndentService {
   getIndentItem(data:any){
     return this.httpClient.post(this.baseUrl+'get-all-indent',data)
   }
+
+  getAllIndentItem(data:any)
+  {
+    return this.httpClient.post(this.baseUrl+'get-all-indentitem',data)
+  }
 }
