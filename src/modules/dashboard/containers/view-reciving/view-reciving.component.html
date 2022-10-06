@@ -1,0 +1,39 @@
+<sb-card>
+    <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Verify Indent</div>
+<div class="card-body">
+    <form>
+        <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm"/>
+            <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S No.</th>
+                    <th scope="col"><span>Receiving ID</span></th>
+                    <th scope="col"><span>Status</span></th>
+                    <th scope="col"><span>Date of Indent</span></th>
+                    <th  scope="col"><span>Action</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let indent of indentListResponse?.data">
+                    <th scope="row">{{ indent.sno }}</th>
+                    <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
+                    <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
+                    <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
+                    <td><button type="button"  class="btn btn-success">View Indent </button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="total" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="nextPage($event)"></ngb-pagination
+            ><select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                <option [ngValue]="2">2 items per page</option>
+                <option [ngValue]="4">4 items per page</option>
+                <option [ngValue]="6">6 items per page</option>
+            </select>
+        </div>
+    </form>
+        
+    </div>
+</sb-card>

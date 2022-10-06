@@ -1,0 +1,158 @@
+<sb-card>
+    <div class="card-header">
+        <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Add Indent
+    </div>
+    <div class="card-body">
+
+        <div class="">
+            <main class="">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <h4 class="mb-3">Indent Information</h4>
+                        <form [formGroup]="indentInfo" class="needs-validation">
+                            <ul class="list-group">
+                                <li class="list-group-item mb-3" formArrayName="items"
+                                    *ngFor="let product of indentInfo.get('items')['controls']; let i = index;"
+                                    style="border:none !important;padding:unset;">
+                                    <div class="card">
+                                        <div class="card-header ">
+                                            <div class="header-container">
+                                                <span class="product-header">
+                                                    Add Item {{i+1}}
+                                                </span>
+                                                <div *ngIf="i>0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    fill="currentColor" (click)="hideItem(i)"
+                                                    class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                                </svg>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div [formGroupName]="i" class="">
+                                                        <div class="row g-3">
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Item category </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="category" id="category"
+                                                                        class="form-control" formControlName="category">
+                                                                        <option value="1">Plants</option>
+                                                                        <option value="1" selected>Equipment
+                                                                        </option>
+                                                                        <option value="1">Fertilizers</option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('category').dirty || product.get('category').touched) && product.get('category').errors && product.get('category').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Item </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="category" id="item"
+                                                                        class="form-control" formControlName="itemName">
+                                                                        <option value="1">AXE</option>
+                                                                        <option value="1">Bagud Kachi</option>
+                                                                        <option value="1">Broom</option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('itemName').dirty || product.get('itemName').touched) && product.get('itemName').errors && product.get('itemName').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-3">
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Quantity</b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <input class="form-control" id="" min="0"
+                                                                        type="number" formControlName="quantity" />
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('quantity').dirty || product.get('quantity').touched) && product.get('quantity').errors && product.get('quantity').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Unit(UOM) </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="unit" id="unit" class="form-control"
+                                                                        formControlName="unit">
+                                                                        <option value="1">Nos</option>
+                                                                        <option value="1">Kgs</option>
+                                                                        <option value="1">Packet</option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('unit').dirty || product.get('unit').touched) && product.get('unit').errors && product.get('unit').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- <div class="col-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" (click)="addItem()"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                                </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Indent
+                                        Item</button>
+                                </div>
+                            </div>
+                            <!-- <button class="w-100 btn btn-primary btn-lg" type="button" (click)="addItem()">Add Indent Item</button> -->
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <label class="form-label"><b> Upload File</b><span
+                                            style="color:red">*</span></label>
+                                    <div class="input-group">
+                                        <input class="form-control no-border" type="file" formControlName="files"
+                                            accept="image/*" capture />
+                                    </div>
+                                    <!-- <span *ngIf="(indentInfo.get('remarks').dirty || indentInfo.get('remarks').touched) && indentInfo.get('remarks').errors && indentInfo.get('remarks').hasError('required')" class="validation">* required</span> -->
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <label class="form-label"><b> Remarks</b><span style="color:red">*</span></label>
+                                    <div class="input-group">
+                                        <textarea formControlName="remarks" class="w-100"></textarea>
+                                    </div>
+                                    <span
+                                        *ngIf="(indentInfo.get('remarks').dirty || indentInfo.get('remarks').touched) && indentInfo.get('remarks').errors && indentInfo.get('remarks').hasError('required')"
+                                        class="validation">* required</span>
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="addIndent()">Save</button>
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</sb-card>
