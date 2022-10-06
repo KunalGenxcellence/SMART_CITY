@@ -22,6 +22,7 @@ export class VerifyIndentComponent implements OnInit {
   isLoading = false;
   closeModal: string = "";
   createIndentList:any;
+  indentObj:any;
 
   constructor(
     private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal
@@ -71,35 +72,37 @@ pageSizeChanged(){
   this.getIndents(this.currentPage,this.pageSize);
 }
 
-// private getDismissReason(reason: any): string {
-//   if (reason === 1) {
-//     return 'by pressing ESC';
-//   } else if (reason === 0) {
-//     return 'by clicking on a backdrop';
-//   } else {
-//     return  `with: ${reason}`;
-//   }
-// }
+private getDismissReason(reason: any): string {
+  if (reason === 1) {
+    return 'by pressing ESC';
+  } else if (reason === 0) {
+    return 'by clicking on a backdrop';
+  } else {
+    return  `with: ${reason}`;
+  }
+}
 
-// triggerConfirmationModal(content: any) {
-//   this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
-//     this.closeModal = `Closed with: ${res}`;
-//   }, (res) => {
-//     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-//   });
-// }
+triggerConfirmationModal(content: any) {
+  this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+    this.closeModal = `Closed with: ${res}`;
+  }, (res) => {
+    this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+  });
+}
 
-getIndentLineItems( OrderID : any,content: any){
+getIndentLineItems( OrderID : any,content: any,indentObj:any){
+  debugger;
   let createIndent = {
     order_id :  OrderID,
     page_no : '1',
     record_limit : '10'
    };
 
+   this.indentObj = indentObj;
   this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
     this.createIndentList = response;
     this.isLoading = false;
-    // this.triggerConfirmationModal(content);
+    this.triggerConfirmationModal(content);
 
   },error =>{
     console.log(error);

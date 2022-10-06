@@ -21,7 +21,7 @@
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent)">View Indent </button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">View Indent </button> </td>
                 </tr>
             </tbody>
         </table>
@@ -38,12 +38,9 @@
     </div>
 </sb-card>
 
-
-
-<!--   
   <ng-template #VerifyIndent let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
+      <h4 class="modal-title">INDENT - {{indentObj.OrderNo}}</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
@@ -51,18 +48,21 @@
             <thead>
                 <tr>
                     <th scope="col">S No.</th>
-                    <th scope="col"><span>Indent ID</span></th>
-                    <th scope="col"><span>Status</span></th>
-                    <th scope="col"><span>Date of Indent</span></th>
+                    <th scope="col"><span>Category</span></th>
+                    <th scope="col"><span>Item</span></th>
+                    <th scope="col"><span>Quantity</span></th>
+                    <th  scope="col"><span>Unit</span></th>
                     <th  scope="col"><span>Action</span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let indent of indentListResponse?.data">
+                <tr *ngFor="let indent of createIndentList?.data">
                     <th scope="row">{{ indent.sno }}</th>
-                    <td><ngb-highlight [result]=""></ngb-highlight></td>
-                    <td><ngb-highlight [result]=""></ngb-highlight></td>
-                    <td><ngb-highlight [result]=""></ngb-highlight></td>
+                        <td>{{indent.item_category}}</td>
+                        <td>  {{indent.item_name}} </td>
+                    <td>{{indent.item_qty}}</td>
+                    <td>{{indent.item_unit}}</td>
+                    <td><input type="checkbox"></td>
                 </tr>
             </tbody>
         </table>
@@ -70,7 +70,7 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
-  </ng-template> -->
+  </ng-template>
   
   
   
