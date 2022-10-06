@@ -21,7 +21,7 @@
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="triggerConfirmationModal(ViewReceiving)">View Indent </button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getRecevingItem(indent.OrderID,ViewReceiving)">View Indent </button> </td>
                 </tr>
             </tbody>
         </table>
@@ -39,7 +39,7 @@
 </sb-card>
 
 
-<ng-template #ViewReceiving let-modal>
+<!-- <ng-template #ViewReceiving let-modal>
     <div class="modal-header">
       <h4 class="modal-title">Modal title</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -61,7 +61,6 @@
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="triggerConfirmationModal(VerifyIndent)">View Indent </button> </td>
                 </tr>
             </tbody>
         </table>
@@ -69,4 +68,4 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
-  </ng-template>
+  </ng-template> -->

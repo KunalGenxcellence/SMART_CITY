@@ -21,7 +21,7 @@
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="triggerConfirmationModal(VerifyIndent)">View Indent </button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent)">View Indent </button> </td>
                 </tr>
             </tbody>
         </table>
@@ -39,19 +39,8 @@
 </sb-card>
 
 
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <p>One fine body&hellip;</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-    </div>
-  </ng-template>
-  
+
+<!--   
   <ng-template #VerifyIndent let-modal>
     <div class="modal-header">
       <h4 class="modal-title">Modal title</h4>
@@ -71,10 +60,9 @@
             <tbody>
                 <tr *ngFor="let indent of indentListResponse?.data">
                     <th scope="row">{{ indent.sno }}</th>
-                    <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
-                    <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
-                    <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="triggerConfirmationModal(VerifyIndent)">View Indent </button> </td>
+                    <td><ngb-highlight [result]=""></ngb-highlight></td>
+                    <td><ngb-highlight [result]=""></ngb-highlight></td>
+                    <td><ngb-highlight [result]=""></ngb-highlight></td>
                 </tr>
             </tbody>
         </table>
@@ -82,7 +70,7 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
-  </ng-template>
+  </ng-template> -->
   
   
   

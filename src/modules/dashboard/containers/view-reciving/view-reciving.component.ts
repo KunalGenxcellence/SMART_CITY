@@ -21,6 +21,7 @@ export class ViewRecivingComponent implements OnInit {
   orderTypeId: number = 2;
   isLoading = false;
   closeModal: String = ""
+  createIndentList:any;
 
   constructor(
     private indentService:IndentService,
@@ -70,22 +71,42 @@ pageSizeChanged(){
   this.getIndents(this.currentPage,this.pageSize);
 }
 
-private getDismissReason(reason: any): string {
-  if (reason === 1) {
-    return 'by pressing ESC';
-  } else if (reason === 0) {
-    return 'by clicking on a backdrop';
-  } else {
-    return  `with: ${reason}`;
-  }
-}
+// private getDismissReason(reason: any): string {
+//   if (reason === 1) {
+//     return 'by pressing ESC';
+//   } else if (reason === 0) {
+//     return 'by clicking on a backdrop';
+//   } else {
+//     return  `with: ${reason}`;
+//   }
+// }
 
-triggerConfirmationModal(content: any) {
-  this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
-    this.closeModal = `Closed with: ${res}`;
-  }, (res) => {
-    this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-  });
+// triggerConfirmationModal(content: any) {
+//   this.modalService.open(content, {size: 'lg',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+//     this.closeModal = `Closed with: ${res}`;
+//   }, (res) => {
+//     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+//   });
+// }
+
+
+getRecevingItem( OrderID : any,content: any){
+  let createIndent = {
+    order_id :  OrderID,
+    page_no : '1',
+    record_limit : '10'
+   };
+
+  this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
+    this.createIndentList = response;
+    this.isLoading = false;
+
+  },error =>{
+    console.log(error);
+    this.isLoading = false;
+  })
+  // this.triggerConfirmationModal(content);
+
 }
 
 }
