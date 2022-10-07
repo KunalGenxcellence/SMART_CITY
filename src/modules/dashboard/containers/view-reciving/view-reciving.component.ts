@@ -26,6 +26,7 @@ export class ViewRecivingComponent implements OnInit {
   receivingObj:any
   verifiedInddentList:any;
   indentOrderTypeId=2
+  isApproveAccess: Boolean = true;
 
   constructor(
     private indentService:IndentService,
@@ -100,12 +101,16 @@ ConfirmationModal(content: any) {
   });
 }
 
+approveItem(){
+  let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
+  if(user_details.name === "HO"){
+    this.isApproveAccess = false;
+  }
+}
 
 getRecevingItem( OrderID : any,content: any,receivingObj:any){
   let createIndent = {
-    order_id :  OrderID,
-    page_no : '1',
-    record_limit : '10'
+    order_id :  OrderID
    };
    this.receivingObj = receivingObj;
   this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
@@ -117,14 +122,22 @@ getRecevingItem( OrderID : any,content: any,receivingObj:any){
     this.isLoading = false;
   })
   // this.triggerConfirmationModal(content);
-
+  this.approveItem();
 }
-getcheckedVerified()
-{
-let verifyIndentItem={ordertype_id:this.indentOrderTypeId, lineitem_id:"1"
 
-};
-this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
+checkboxChange(value : any, object : any){
+  if(value.target.checked){
+    object.status = 5;
+  }
+  else{
+    object.status = 4;
+  }
+}
+
+getcheckedVerified(data:any)
+{
+  let verifyIndentItem={ordertype_id:this.indentOrderTypeId, data:data};
+  this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
   this.verifiedInddentList = response;
   this.isLoading = false;
   this.toaster.success(this.verifiedInddentList.message)
@@ -134,5 +147,6 @@ this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
   this.isLoading = false;
 })
 }
+
 
 }

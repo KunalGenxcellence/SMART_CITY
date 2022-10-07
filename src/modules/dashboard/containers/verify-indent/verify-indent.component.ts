@@ -25,6 +25,8 @@ export class VerifyIndentComponent implements OnInit {
   indentObj:any;
   indentOrderTypeId :number = 1;
   verifiedInddentList:any;
+  isApproveAccess: Boolean = true;
+
   // tempIndentData:any;
   constructor(
     private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal, private toaster:ToastrService)
@@ -101,6 +103,14 @@ ConfirmationModal(content: any) {
   });
 }
 
+approveItem(){
+  let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
+  if(user_details.name === "HO"){
+    this.isApproveAccess = false;
+  }
+  
+}
+
 getIndentLineItems( OrderID : any,content: any,indentObj:any){
   let createIndent = {
     order_id :  OrderID,
@@ -121,15 +131,21 @@ getIndentLineItems( OrderID : any,content: any,indentObj:any){
     console.log(error);
     this.isLoading = false;
   })
-  
-
+  this.approveItem();
 }
 
-getcheckedVerified()
-{
-let verifyIndentItem={ordertype_id:this.indentOrderTypeId, lineitem_id:"1"
+checkboxChange(value : any, object : any){
+  if(value.target.checked){
+    object.status = 5;
+  }
+  else{
+    object.status = 4;
+  }
+}
 
-};
+getcheckedVerified(data : any)
+{
+let verifyIndentItem={ordertype_id:this.indentOrderTypeId, data:data};
 this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
   this.verifiedInddentList = response;
   this.isLoading = false;

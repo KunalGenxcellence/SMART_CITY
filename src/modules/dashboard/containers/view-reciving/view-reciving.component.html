@@ -61,9 +61,9 @@
                       <th scope="row">{{ indent.sno }}</th>
                           <td>{{indent.item_category}}</td>
                           <td>  {{indent.item_name}} </td>
-                      <td>{{indent.item_qty}}</td>
+                      <td> <input type="text" [(ngModel)]="indent.item_qty"></td>
                       <td>{{indent.item_unit}}</td>
-                      <td><input type="checkbox"></td>
+                      <td><input type="checkbox" [disabled]="isApproveAccess" [(ngModel)]="indent.status" (ngModelChange)="checkboxChange($event,indent)"></td>
                   </tr>
               </tbody>
           </table>
@@ -86,7 +86,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Close</button>
-        <button type="button" class="btn btn-success" (click)="getcheckedVerified(); modal.close('Close click')">yes</button>&nbsp;
+        <button type="button" class="btn btn-success" (click)="getcheckedVerified(createIndentList?.data); modal.close('Close click')">yes</button>&nbsp;
      
     </div>
   </ng-template>
