@@ -13,6 +13,9 @@ export class AddReceivingComponent implements OnInit {
 
   indentInfo : FormGroup;
   indentOrderTypeId :number = 2;
+  isLoading:boolean=false;
+
+
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, private indentService:IndentService, private router:Router){
     this.indentInfo = this.formBuilder.group({
       files:[],
@@ -74,11 +77,13 @@ export class AddReceivingComponent implements OnInit {
 
     //console.log('data is ', this.indentInfo.value);
     if(!this.indentInfo.valid){
-      return;
+      this.showError();
+      return this.indentInfo
     }
     let indentData = this.indentInfo.value;
     indentData['ordertype_id'] = this.indentOrderTypeId;
     indentData['created_by'] = 2;
+    this.isLoading=true;
     this.indentService.saveIndent(indentData).subscribe(response=>{
         this.toastr.success('Indent Created Succesfully.', '', {
           timeOut: 3000,
@@ -87,6 +92,7 @@ export class AddReceivingComponent implements OnInit {
       
     },
     error =>{
+      this.isLoading=true;
       console.log(error);
       if(error.error){
         console.log(error.message);

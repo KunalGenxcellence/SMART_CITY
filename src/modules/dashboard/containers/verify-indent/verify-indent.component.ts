@@ -4,6 +4,7 @@ import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives
 import { Country } from '@modules/tables/models';
 import { CountryService } from '@modules/tables/services';
 import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,7 +13,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./verify-indent.component.scss']
 })
 export class VerifyIndentComponent implements OnInit {
-
   pageSize = 5;
   currentPage = 1;
   indentListResponse: any;
@@ -23,10 +23,14 @@ export class VerifyIndentComponent implements OnInit {
   closeModal: string = "";
   createIndentList:any;
   indentObj:any;
-
+  indentOrderTypeId :number = 1;
+  verifiedInddentList:any;
+  // tempIndentData:any;
   constructor(
-    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal
-) {}
+    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal, private toaster:ToastrService)
+     {
+
+     }
 
 ngOnInit() {
   this.isLoading = true;
@@ -89,6 +93,13 @@ triggerConfirmationModal(content: any) {
     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
   });
 }
+ConfirmationModal(content: any) {
+  this.modalService.open(content, {size: 'md',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+    this.closeModal = `Closed with: ${res}`;
+  }, (res) => {
+    this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+  });
+}
 
 getIndentLineItems( OrderID : any,content: any,indentObj:any){
   let createIndent = {
@@ -98,17 +109,42 @@ getIndentLineItems( OrderID : any,content: any,indentObj:any){
    };
 
    this.indentObj = indentObj;
+   
   this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
     this.createIndentList = response;
     this.isLoading = false;
+    // this.tempIndentData=JSON.stringify(this.createIndentList);
     this.triggerConfirmationModal(content);
 
   },error =>{
+ 
     console.log(error);
     this.isLoading = false;
   })
   
 
 }
+
+getcheckedVerified()
+{
+let verifyIndentItem={ordertype_id:this.indentOrderTypeId, lineitem_id:"1"
+
+};
+this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
+  this.verifiedInddentList = response;
+  this.isLoading = false;
+  this.toaster.success(this.verifiedInddentList.message)
+
+},error =>{
+  console.log(error);
+  this.isLoading = false;
+})
+}
+
+// get disableindent() {
+//   return JSON.stringify(this.createIndentList) == this.tempIndentData; 
+// }
+
+
 
 }

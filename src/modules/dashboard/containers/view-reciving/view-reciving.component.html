@@ -1,5 +1,5 @@
-<sb-card>
-    <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Verify Indent</div>
+<sb-card *ngIf="!isLoading">
+    <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>View Receiving</div>
 <div class="card-body">
     <form>
         <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm"/>
@@ -21,7 +21,7 @@
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="getRecevingItem(indent.OrderID,ViewReceiving,indent)">View Indent </button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getRecevingItem(indent.OrderID,ViewReceiving,indent)">View Receiving </button> </td>
                 </tr>
             </tbody>
         </table>
@@ -69,6 +69,27 @@
           </table>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
       </div>
   </ng-template>
+
+  <ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">INDENT - {{receivingObj.OrderNo}}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+<span>
+    Do you want verify this indent
+</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-success" (click)="getcheckedVerified(); modal.close('Close click')">yes</button>&nbsp;
+     
+    </div>
+  </ng-template>
+    
+  <sb-spinner *ngIf="isLoading"></sb-spinner>
+  

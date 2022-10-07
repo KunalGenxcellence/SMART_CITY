@@ -1,4 +1,4 @@
-<sb-card>
+<sb-card *ngIf="!isLoading">
     <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Verify Indent</div>
 <div class="card-body">
     <form>
@@ -62,15 +62,37 @@
                         <td>  {{indent.item_name}} </td>
                     <td>{{indent.item_qty}}</td>
                     <td>{{indent.item_unit}}</td>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" ></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
       <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
   </ng-template>
+
+  <ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">INDENT - {{indentObj.OrderNo}}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+<span>
+    Do you want verify this indent
+</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-success" (click)="getcheckedVerified(); modal.close('Close click')">yes</button>&nbsp;
+     
+    </div>
+  </ng-template>
+
+
+ 
   
-  
+ 
+  <sb-spinner *ngIf="isLoading"></sb-spinner>
   

@@ -5,6 +5,7 @@ import { Country } from '@modules/tables/models';
 import { CountryService } from '@modules/tables/services';
 import { Observable } from 'rxjs';
 import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sb-view-reciving',
@@ -23,10 +24,12 @@ export class ViewRecivingComponent implements OnInit {
   closeModal: String = ""
   createIndentList:any;
   receivingObj:any
+  verifiedInddentList:any;
+  indentOrderTypeId=2
 
   constructor(
     private indentService:IndentService,
-    private modalService: NgbModal
+    private modalService: NgbModal, private toaster:ToastrService
 ) {}
 
 ngOnInit() {
@@ -89,6 +92,13 @@ triggerConfirmationModal(content: any) {
     this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
   });
 }
+ConfirmationModal(content: any) {
+  this.modalService.open(content, {size: 'md',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+    this.closeModal = `Closed with: ${res}`;
+  }, (res) => {
+    this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+  });
+}
 
 
 getRecevingItem( OrderID : any,content: any,receivingObj:any){
@@ -108,6 +118,21 @@ getRecevingItem( OrderID : any,content: any,receivingObj:any){
   })
   // this.triggerConfirmationModal(content);
 
+}
+getcheckedVerified()
+{
+let verifyIndentItem={ordertype_id:this.indentOrderTypeId, lineitem_id:"1"
+
+};
+this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
+  this.verifiedInddentList = response;
+  this.isLoading = false;
+  this.toaster.success(this.verifiedInddentList.message)
+
+},error =>{
+  console.log(error);
+  this.isLoading = false;
+})
 }
 
 }

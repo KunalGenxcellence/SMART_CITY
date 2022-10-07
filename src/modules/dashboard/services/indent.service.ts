@@ -28,4 +28,8 @@ export class IndentService {
   {
     return this.httpClient.post(this.baseUrl+'get-all-indentitem',data)
   }
+  verifyIndentItem(data:any)
+  {
+    return this.httpClient.post(this.baseUrl+'verify-indentitem',data) 
+  }
 }
