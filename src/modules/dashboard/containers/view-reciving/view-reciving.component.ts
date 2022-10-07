@@ -28,7 +28,7 @@ export class ViewRecivingComponent implements OnInit {
   verifiedInddentList:any;
   indentOrderTypeId=2
   isApproveAccess: Boolean = true;
-
+  searchText='';
   constructor(
     private indentService:IndentService,
     private modalService: NgbModal, private toaster:ToastrService,private spinner: NgxSpinnerService
@@ -43,7 +43,7 @@ ngOnInit() {
 }
 
 getIndents(page:any,pageSize:any){
-  let getIndentObj = {ordertype_id:this.orderTypeId,page_no:page,record_limit:pageSize};
+  let getIndentObj = {ordertype_id:this.orderTypeId,page_no:page,record_limit:pageSize,search_text:this.searchText};
   this.indentService.getIndent(getIndentObj).subscribe(response=>{
       this.indentListResponse = response;
       this.total = this.indentListResponse['total_no_of_records'];
@@ -136,10 +136,10 @@ getRecevingItem( OrderID : any,content: any,receivingObj:any){
 
 checkboxChange(value : any, object : any){
   if(value.target.checked){
-    object.status = 5;
+    object.item_status = 5;
   }
   else{
-    object.status = 4;
+    object.item_status = 4;
   }
 }
 
@@ -151,12 +151,25 @@ getcheckedVerified(data:any)
   this.verifiedInddentList = response;
   this.isLoading = false;
   this.toaster.success(this.verifiedInddentList.message)
-  this.spinner.hide();
+  //this.spinner.hide();
+  this.modalService.dismissAll();
+  this.getIndents(this.currentPage,this.pageSize);
 },error =>{
   console.log(error);
   this.isLoading = false;
   this.spinner.hide();
 })
+}
+
+searchIndent(){
+  if(this.searchText.length == 16){
+    this.spinner.show();
+    this.getIndents(this.currentPage,this.pageSize);
+  }
+  if(this.searchText.length == 0){
+    this.spinner.show();
+    this.getIndents(this.currentPage,this.pageSize);
+  }
 }
 
 

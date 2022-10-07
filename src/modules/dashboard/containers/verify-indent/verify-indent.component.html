@@ -2,7 +2,7 @@
     <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Verify Indent</div>
 <div class="card-body">
     <form>
-        <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm"/>
+        <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
             <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
         </div>
         <table class="table table-striped">
@@ -19,9 +19,9 @@
                 <tr *ngFor="let indent of indentListResponse?.data">
                     <th scope="row">{{ indent.sno }}</th>
                     <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
-                    <td><ngb-highlight [result]="indent.status"></ngb-highlight></td>
+                    <td><span [ngClass]="indent.status =='Open' ? 'badge badge-pill badge-danger' : indent.status =='In Progress' ? 'badge badge-pill badge-primary' : 'badge badge-pill badge-info'">{{indent.status}}</span></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">View Indent </button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">View</button> </td>
                 </tr>
             </tbody>
         </table>
@@ -62,7 +62,7 @@
                         <td>  {{indent.item_name}} </td>
                     <td>{{indent.item_qty}}</td>
                     <td>{{indent.item_unit}}</td>
-                    <td><input type="checkbox" [disabled]="isApproveAccess" [(ngModel)]="indent.status" (ngModelChange)="checkboxChange($event,indent)"></td>
+                    <td><input type="checkbox" [disabled]="isApproveAccess" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
                 </tr>
             </tbody>
         </table>

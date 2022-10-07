@@ -20,7 +20,7 @@ export class AddReceivingComponent implements OnInit {
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, private indentService:IndentService, private router:Router,private spinner: NgxSpinnerService){
     this.indentInfo = this.formBuilder.group({
       files:[],
-      remarks : [],
+      remarks : ['',[Validators.required]],
       items : this.formBuilder.array([])
     })
   }
@@ -30,11 +30,11 @@ export class AddReceivingComponent implements OnInit {
   }
 
   addItem(){
-    if(this.indentInfo.invalid){
+    let items = this.indentInfo.get('items') as FormArray;
+    if(items.invalid){
       this.showError();
       return this.indentInfo
     }
-    let items = this.indentInfo.get('items') as FormArray;
     items.push(this.formBuilder.group({
       category : ['', [Validators.required]],
       itemName : ['', [Validators.required]],

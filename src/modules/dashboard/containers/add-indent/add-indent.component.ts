@@ -20,7 +20,7 @@ export class AddIndentComponent implements OnInit {
     private spinner: NgxSpinnerService){
     this.indentInfo = this.formBuilder.group({
       files:[],
-      remarks : [],
+      remarks : ['',[Validators.required]],
       items : this.formBuilder.array([])
     })
   }
@@ -33,12 +33,11 @@ export class AddIndentComponent implements OnInit {
   }
 
   addItem(){
-    if(this.indentInfo.invalid ){
+    let items = this.indentInfo.get('items') as FormArray;
+    if(items.invalid){
       this.showError();
       return this.indentInfo
     }
-    let items = this.indentInfo.get('items') as FormArray;
-    console.log(items)
     items.push(this.formBuilder.group({
       category : ['', [Validators.required]],
       itemName : ['', [Validators.required]],
