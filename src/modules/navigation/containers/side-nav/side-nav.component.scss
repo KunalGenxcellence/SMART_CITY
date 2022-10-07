@@ -1,1 +1,19 @@
 @import 'styles/variables.scss';
+.sb-sidenav{
+    background-color: #3e5871 !important;
+    color: #ffffff;
+    
+}
+.sb-sidenav-menu-heading{
+color: #ffffff !important;
+}
+.text-color-change
+{
+    color: #ffffff !important;
+}
+ ::ng-deep .sb-sidenav-dark .sb-sidenav-menu .nav-link {
+    color: #ffffff !important;
+}
+.sb-sidenav-footer{
+    background:#2C3E50 !important;
+}

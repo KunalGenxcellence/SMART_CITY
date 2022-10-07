@@ -3,3 +3,24 @@
 thead > tr > th {
     cursor: pointer;
 }
+.btn-success{
+    background-color: #1abc9c !important;
+    border-color:  #1abc9c !important;
+  }
+  .btn-primary{
+    background-color: #1abc9c !important;
+    border-color:  #1abc9c !important;
+  }
+  ::ng-deep .page-item.active .page-link {
+    background-color: #1abc9c !important;
+    border-color:  #1abc9c !important;
+}
+.card-header{
+    background:#2C3E50 !important;
+    color: #ffffff;
+}
+.modal-header{
+    background:#2C3E50 !important;
+    color: #ffffff;
+}
+
