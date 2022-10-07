@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IndentService } from '@modules/dashboard/services/indent.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,7 +16,8 @@ export class AddIndentComponent implements OnInit {
   indentOrderTypeId :number = 1;
   isLoading:boolean=false;
 
-  constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService, private router:Router){
+  constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService, private router:Router,
+    private spinner: NgxSpinnerService){
     this.indentInfo = this.formBuilder.group({
       files:[],
       remarks : [],
@@ -85,16 +87,19 @@ export class AddIndentComponent implements OnInit {
     indentData['ordertype_id'] = this.indentOrderTypeId;
     indentData['created_by'] = 1;
     this.isLoading=true;
+    this.spinner.show();
     this.indentService.saveIndent(indentData).subscribe(response=>{
         this.toastr.success('Indent Created Succesfully.', '', {
           timeOut: 3000,
         });
+        this.spinner.hide();
         this.router.navigate(['dashboard/verifyIndent'])
       
     },
     error =>{
       this.isLoading=true;
       console.log(error);
+      this.spinner.hide();
       if(error.error){
         console.log(error.message);
         this.toastr.error(error.message, '', {

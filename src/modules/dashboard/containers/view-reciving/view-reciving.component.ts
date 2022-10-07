@@ -6,6 +6,7 @@ import { CountryService } from '@modules/tables/services';
 import { Observable } from 'rxjs';
 import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'sb-view-reciving',
@@ -30,13 +31,15 @@ export class ViewRecivingComponent implements OnInit {
 
   constructor(
     private indentService:IndentService,
-    private modalService: NgbModal, private toaster:ToastrService
+    private modalService: NgbModal, private toaster:ToastrService,private spinner: NgxSpinnerService
 ) {}
 
 ngOnInit() {
   this.isLoading = true;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
+  this.approveItem();
 }
 
 getIndents(page:any,pageSize:any){
@@ -45,10 +48,12 @@ getIndents(page:any,pageSize:any){
       this.indentListResponse = response;
       this.total = this.indentListResponse['total_no_of_records'];
       this.isLoading = false;
+      this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
   },error =>{
     console.log(error);
     this.isLoading = false;
+    this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
   })
 }
@@ -67,12 +72,14 @@ nextPage(page:number){
   this.isLoading = true;
   this.indentListResponse = null;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
 }
 pageSizeChanged(){
   this.isLoading = true;
   this.indentListResponse = null;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
 }
 
@@ -113,16 +120,18 @@ getRecevingItem( OrderID : any,content: any,receivingObj:any){
     order_id :  OrderID
    };
    this.receivingObj = receivingObj;
+   this.spinner.show();
   this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
     this.createIndentList = response;
     this.isLoading = false;
+    this.spinner.hide();
     this.triggerConfirmationModal(content);
   },error =>{
     console.log(error);
     this.isLoading = false;
+    this.spinner.hide();
   })
   // this.triggerConfirmationModal(content);
-  this.approveItem();
 }
 
 checkboxChange(value : any, object : any){
@@ -136,15 +145,17 @@ checkboxChange(value : any, object : any){
 
 getcheckedVerified(data:any)
 {
+  this.spinner.show();
   let verifyIndentItem={ordertype_id:this.indentOrderTypeId, data:data};
   this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response=>{
   this.verifiedInddentList = response;
   this.isLoading = false;
   this.toaster.success(this.verifiedInddentList.message)
-
+  this.spinner.hide();
 },error =>{
   console.log(error);
   this.isLoading = false;
+  this.spinner.hide();
 })
 }
 

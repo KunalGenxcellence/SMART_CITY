@@ -4,6 +4,7 @@ import { SBSortableHeaderDirective, SortEvent } from '@modules/tables/directives
 import { Country } from '@modules/tables/models';
 import { CountryService } from '@modules/tables/services';
 import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
@@ -29,7 +30,8 @@ export class VerifyIndentComponent implements OnInit {
 
   // tempIndentData:any;
   constructor(
-    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal, private toaster:ToastrService)
+    private indentService:IndentService,private changeDetectorRef: ChangeDetectorRef,private modalService: NgbModal, private toaster:ToastrService,
+    private spinner: NgxSpinnerService)
      {
 
      }
@@ -37,6 +39,7 @@ export class VerifyIndentComponent implements OnInit {
 ngOnInit() {
   this.isLoading = true;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
 }
 
@@ -46,10 +49,12 @@ getIndents(page:any,pageSize:any){
       this.indentListResponse = response;
       this.total = this.indentListResponse['total_no_of_records'];
       this.isLoading = false;
+      this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
   },error =>{
     console.log(error);
     this.isLoading = false;
+    this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
   })
 }
@@ -68,6 +73,7 @@ nextPage(page:number){
   this.isLoading = true;
   this.indentListResponse = null;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
 }
 
@@ -75,6 +81,7 @@ pageSizeChanged(){
   this.isLoading = true;
   this.indentListResponse = null;
   //this.changeDetectorRef.detectChanges();
+  this.spinner.show();
   this.getIndents(this.currentPage,this.pageSize);
 }
 
@@ -119,10 +126,11 @@ getIndentLineItems( OrderID : any,content: any,indentObj:any){
    };
 
    this.indentObj = indentObj;
-   
+   this.spinner.show();
   this.indentService.getAllIndentItem(createIndent).subscribe(response=>{
     this.createIndentList = response;
     this.isLoading = false;
+    this.spinner.hide();
     // this.tempIndentData=JSON.stringify(this.createIndentList);
     this.triggerConfirmationModal(content);
 
