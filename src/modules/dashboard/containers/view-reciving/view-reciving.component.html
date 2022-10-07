@@ -70,7 +70,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
       </div>
   </ng-template>
 
@@ -81,11 +81,11 @@
     </div>
     <div class="modal-body">
 <span>
-    Do you want verify this indent
+    Do you want verify this receiving?
 </span>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
         <button type="button" class="btn btn-success" (click)="getcheckedVerified(createIndentList?.data); modal.close('Close click')">yes</button>&nbsp;
      
     </div>
