@@ -16,6 +16,13 @@ export class AddReceivingComponent implements OnInit {
   indentOrderTypeId :number = 2;
   isLoading:boolean=false;
 
+  categories = [{name:'Plants',id:'1'},{name:'Equipment',id:'2'},{name:'Chemicals',id:'3'},{name:'Civil Item',id:'4'}];
+  itemList = [{name:'Rose',id:'1',category:1},{name:'Marigold',id:'2',category:1},{name:'Lily',id:'3',category:1},
+              {name:'Broom',id:'4',category:2},{name:'Plough',id:'5',category:2},{name:'Bagud',id:'6',category:2},
+              {name:'Fertilizer',id:'7',category:3},{name:'Pesticides',id:'8',category:3},
+              {name:'Cement',id:'9',category:4},{name:'Bricks',id:'10',category:4},{name:'Gravel',id:'11',category:4}];
+  ItemDropdown :any=[];
+
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, private indentService:IndentService, private router:Router,private spinner: NgxSpinnerService){
     this.indentInfo = this.formBuilder.group({
@@ -51,6 +58,13 @@ export class AddReceivingComponent implements OnInit {
       quantity:['', [Validators.required]],
       unit:['', [Validators.required]],
     }));
+  }
+
+
+  onCategoryChange(event:any,index:any){
+    this.ItemDropdown[index] = this.itemList.filter((item,i)=>{
+      return item['category'] == event;
+    })
   }
 
   // createCustomerInfo(){

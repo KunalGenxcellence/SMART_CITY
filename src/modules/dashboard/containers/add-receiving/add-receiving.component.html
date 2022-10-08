@@ -40,12 +40,8 @@
                                                                 <label class="form-label"><b> Item category </b><span
                                                                         style="color:red">*</span></label>
                                                                 <div class="input-group">
-                                                                    <select name="category" id="category"
-                                                                        class="form-control" formControlName="category">
-                                                                        <option value="1">Plants</option>
-                                                                        <option value="1" selected>Equipment
-                                                                        </option>
-                                                                        <option value="1">Fertilizers</option>
+                                                                    <select name="category" id="category" class="form-control" formControlName="category" (ngModelChange)="onCategoryChange($event,i)">
+                                                                        <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('category').dirty || product.get('category').touched) && product.get('category').errors && product.get('category').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
@@ -57,9 +53,7 @@
                                                                 <div class="input-group">
                                                                     <select name="category" id="item"
                                                                         class="form-control" formControlName="itemName">
-                                                                        <option value="1">AXE</option>
-                                                                        <option value="1">Bagud Kachi</option>
-                                                                        <option value="1">Broom</option>
+                                                                        <option *ngFor="let item of ItemDropdown[i]" [ngValue]="item.id">{{item.name}}</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('itemName').dirty || product.get('itemName').touched) && product.get('itemName').errors && product.get('itemName').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
