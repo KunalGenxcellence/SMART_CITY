@@ -8,8 +8,11 @@ import { UserService } from '@modules/auth/services';
     styleUrls: ['top-nav-user.component.scss'],
 })
 export class TopNavUserComponent implements OnInit {
+    user:any;
     constructor(public userService: UserService) {}
-    ngOnInit() {}
+    ngOnInit() {
+        this.user = JSON.parse(localStorage.getItem("user_details") || '{}');
+    }
 
 
     logout(){

@@ -2,9 +2,10 @@
     <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Verify Indent</div>
 <div class="card-body">
     <form>
-        <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
+        <div class="form-group form-inline">Search By Indent ID: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
             <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
         </div>
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -12,19 +13,22 @@
                     <th scope="col"><span>Indent ID</span></th>
                     <th scope="col"><span>Status</span></th>
                     <th scope="col"><span>Date of Indent</span></th>
+                    <th scope="col"><span>Creator Id</span></th>
                     <th  scope="col"><span>Action</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let indent of indentListResponse?.data">
-                    <th scope="row">{{ indent.sno }}</th>
-                    <td><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></td>
+                    <td scope="row">{{ indent.sno }}</td>
+                    <td><b><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></b></td>
                     <td><span [ngClass]="indent.status =='Open' ? 'badge badge-pill badge-danger' : indent.status =='In Progress' ? 'badge badge-pill badge-primary' : 'badge badge-pill badge-info'">{{indent.status}}</span></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
+                    <td>Zone1</td>
                     <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">View</button> </td>
                 </tr>
             </tbody>
         </table>
+    </div>
         <div class="d-flex justify-content-between p-2">
             <ngb-pagination [collectionSize]="total" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="nextPage($event)"></ngb-pagination
             ><select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
@@ -44,6 +48,7 @@
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
     </div>
     <div class="modal-body">
+        <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -62,10 +67,11 @@
                         <td>  {{indent.item_name}} </td>
                     <td>{{indent.item_qty}}</td>
                     <td>{{indent.item_unit}}</td>
-                    <td><input type="checkbox" [disabled]="isApproveAccess" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
+                    <td><input type="checkbox" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
                 </tr>
             </tbody>
         </table>
+    </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;

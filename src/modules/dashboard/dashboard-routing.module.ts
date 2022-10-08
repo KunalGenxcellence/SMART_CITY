@@ -32,7 +32,7 @@ export const ROUTES: Routes = [
     {
         path: 'static',
         data: {
-            title: 'Dashboard Static - SB Admin Angular',
+            title: 'Smart-City',
             breadcrumbs: [
                 {
                     text: 'Dashboard',
@@ -50,7 +50,7 @@ export const ROUTES: Routes = [
     {
         path: 'light',
         data: {
-            title: 'Dashboard Light - SB Admin Angular',
+            title: 'Smart-City',
             breadcrumbs: [
                 {
                     text: 'Dashboard',
@@ -68,7 +68,7 @@ export const ROUTES: Routes = [
     // {
     //     path: 'verifyIndent',
     //     data: {
-    //         title: 'Dashboard Indent - SB Admin Angular',
+    //         title: 'Dashboard Indent - Smart-City',
     //         breadcrumbs: [
     //             {
     //                 text: 'Dashboard',
@@ -86,7 +86,7 @@ export const ROUTES: Routes = [
     // {
     //     path: 'viewReceiving',
     //     data: {
-    //         title: 'Dashboard Receiving - SB Admin Angular',
+    //         title: 'Dashboard Receiving - Smart-City',
     //         breadcrumbs: [
     //             {
     //                 text: 'Dashboard',
