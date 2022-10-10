@@ -2,7 +2,7 @@
     <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>View Receiving</div>
 <div class="card-body">
     <form>
-        <div class="form-group form-inline">Search By Recieving ID: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
+        <div class="form-group form-inline">Search By Receiving ID: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
             <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
         </div>
         <div class="table-responsive">
@@ -75,7 +75,7 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
+        <button type="button" class="btn btn-success" *ngIf="!isApproveAccess" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
         <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
       </div>
   </ng-template>
@@ -91,9 +91,8 @@
 </span>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-secondary"  (click)="modal.close('Close click')">Close</button>
         <button type="button" class="btn btn-success" (click)="getcheckedVerified(createIndentList?.data); modal.close('Close click')">yes</button>&nbsp;
-     
     </div>
   </ng-template>
   

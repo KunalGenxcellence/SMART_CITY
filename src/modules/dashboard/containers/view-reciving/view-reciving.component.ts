@@ -112,6 +112,8 @@ approveItem(){
   let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
   if(user_details.name === "HO"){
     this.isApproveAccess = false;
+  }else{
+    this.isApproveAccess = true;
   }
 }
 
