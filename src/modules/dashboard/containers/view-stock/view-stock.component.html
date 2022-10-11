@@ -1,0 +1,98 @@
+<sb-card>
+    <div class="card-header">
+        <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>View Stock
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text"
+                    name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()" />
+                <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">S No.</th>
+                        <th scope="col"><span>Category</span></th>
+                        <th scope="col"><span>Item</span></th>
+                        <th scope="col"><span>Quantity</span></th>
+                        <th scope="col"><span>Unit</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let indent of createIndentList?.data">
+                        <th scope="row">{{ indent.sno }}</th>
+                        <td>{{indent.item_category}}</td>
+                        <td> {{indent.item_name}} </td>
+                        <td>{{indent.item_qty}}</td>
+                        <td>{{indent.item_unit}}</td>
+                      
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="total" [(page)]="currentPage" [pageSize]="pageSize"
+                    (pageChange)="nextPage($event)"></ngb-pagination><select class="custom-select" style="width: auto"
+                    name="pageSize" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
+                    <option [ngValue]="5">5 items per page</option>
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="20">20 items per page</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</sb-card>
+<!-- 
+<ng-template #VerifyIndent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">STOCK - {{indentObj.OrderNo}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S No.</th>
+                    <th scope="col"><span>Category</span></th>
+                    <th scope="col"><span>Item</span></th>
+                    <th scope="col"><span>Quantity</span></th>
+                    <th scope="col"><span>Unit</span></th>
+                    <th scope="col"><span>Action</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let indent of createIndentList?.data">
+                    <th scope="row">{{ indent.sno }}</th>
+                    <td>{{indent.item_category}}</td>
+                    <td> {{indent.item_name}} </td>
+                    <td>{{indent.item_qty}}</td>
+                    <td>{{indent.item_unit}}</td>
+                    <td><input type="checkbox" [disabled]="isApproveAccess" [checked]="indent.item_status == 5"
+                            (click)="checkboxChange($event,indent)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success"
+            (click)="ConfirmationModal(VerifyIndentConfirmBox)">Submit</button>&nbsp;
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template> -->
+
+<!-- <ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">STOCK - {{indentObj.OrderNo}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+        <span>
+            Are you sure you want to proceed ?
+        </span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-success"
+            (click)="getcheckedVerified(createIndentList?.data); modal.close('Close click')">yes</button>&nbsp;
+
+    </div>
+</ng-template> -->

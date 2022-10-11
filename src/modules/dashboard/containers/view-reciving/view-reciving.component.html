@@ -24,7 +24,7 @@
                     <td><span [ngClass]="indent.status =='Unverified' ? 'badge badge-pill badge-danger' : indent.status =='In Progress' ? 'badge badge-pill badge-primary' : 'badge badge-pill badge-info'">{{indent.status}}</span></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
                     <td>Zone1</td>
-                    <td><button type="button"  class="btn btn-success" (click)="getRecevingItem(indent.OrderID,ViewReceiving,indent)">View</button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getRecevingItem(indent.OrderID,ViewReceiving,indent)">{{indent.status=='Verified'? 'View' : 'Verify'}}</button> </td>
                 </tr>
             </tbody>
         </table>
@@ -66,16 +66,17 @@
                       <th scope="row">{{ indent.sno }}</th>
                           <td>{{indent.item_category}}</td>
                           <td>  {{indent.item_name}} </td>
-                      <td> <input type="text" [(ngModel)]="indent.item_qty" [disabled]="isApproveAccess"></td>
+                      <td> <input type="text" [(ngModel)]="indent.item_qty" [disabled]="isApproveAccess || receivingObj.status=='Verified'"></td>
                       <td>{{indent.item_unit}}</td>
-                      <td><input type="checkbox" [disabled]="isApproveAccess" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
+                      <td><input type="checkbox" [disabled]="isApproveAccess || receivingObj.status=='Verified'" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
                   </tr>
+                  <div class="badge badge-pill badge-info " style="margin-top: 20px;" *ngIf="receivingObj.status=='Verified'">{{receivingObj.status}}</div>
               </tbody>
           </table>
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" *ngIf="!isApproveAccess" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Verify</button>&nbsp;
+        <button type="button" class="btn btn-success" *ngIf="!isApproveAccess && receivingObj.status!='Verified'" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Verify</button>&nbsp;
         <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
       </div>
   </ng-template>

@@ -14,6 +14,9 @@ import * as dashboardGuards from './guards'
 import { VerifyIndentComponent, ViewRecivingComponent } from './containers';
 import { AddIndentComponent } from './containers/add-indent/add-indent.component';
 import { AddReceivingComponent } from './containers/add-receiving/add-receiving.component';
+import { AddStockComponent } from './containers/add-stock/add-stock.component';
+import { ViewStockComponent } from './containers/view-stock/view-stock.component';
+import { RemoveStockComponent } from './containers/remove-stock/remove-stock.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -24,7 +27,10 @@ export const ROUTES: Routes = [
             {path:'verifyIndent', component: VerifyIndentComponent}, 
             {path:'viewReceiving', component:ViewRecivingComponent},
             {path:'addIndent', component:AddIndentComponent},
-            {path:'addReceiving', component:AddReceivingComponent}
+            {path:'addReceiving', component:AddReceivingComponent},
+            {path:'addStock', component: AddStockComponent},
+            {path:'viewStock', component:ViewStockComponent},
+            {path:'removeStock', component:RemoveStockComponent}
         ]
     },
 

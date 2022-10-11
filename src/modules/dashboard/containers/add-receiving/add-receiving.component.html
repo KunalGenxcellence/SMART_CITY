@@ -20,20 +20,14 @@
                                                 <span class="product-header">
                                                     Add Item {{i+1}}
                                                 </span>
-                                                <div *ngIf="i>0">
-                                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="currentColor" (click)="hideItem(i)"
-                                                    class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                                                    </svg>                                            -->
-
-                                                    <button class="dash-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-dash"  (click)="hideItem(i)" viewBox="0 0 16 16">
-                                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                                      </svg></button> 
-                                                
+                                                <div *ngIf="i>0">                                   
+                                                    <button class="dash-icon" (click)="hideItem(i)"> 
+                                                        <!-- <img src="./assets/img/images.jpg" style="width:24px; margin-bottom: 3px; "> -->
+                                                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                          </svg>
+                                                    </button>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -126,7 +120,7 @@
 
                             <div class="row g-3 mt-3">
                                 <div class="col-md-12 col-lg-12">
-                                    <label class="form-label"><b> Remarks</b><span style="color:red">*</span></label>
+                                    <label class="form-label"><b>Requirement</b><span style="color:red">*</span></label>
                                     <div class="input-group">
                                         <textarea formControlName="remarks" class="w-100"></textarea>
                                         <!-- <span *ngIf="product.get('quantity').errors && product.get('quantity').hasError('required')" class="validation">* required</span> -->
@@ -136,7 +130,7 @@
 
                             <div class="row g-3 mt-3">
                                 <div class="col-md-12 col-lg-12 text-right">
-                                    <button type="button" class="btn btn-primary btn-sm mr-2"  (click)="addReceiving()">Save</button>
+                                    <button type="button" class="btn btn-primary btn-sm mr-2"  (click)="addReceiving(VerifyIndentConfirmBox)">Save</button>
                                     <button type="button" class="btn btn-secondary btn-sm mr-2">Cancel</button>
                                 </div>
                             </div>
@@ -147,3 +141,21 @@
         </div>
     </div>
 </sb-card>
+
+
+<ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
+    <div class=" text-position ">
+        <h5 class="text-center" style="margin-top: 15px; margin-bottom: 15px;"><b>Thank You </b></h5>
+    </div>
+   
+    <div class="modal-body text-center">
+        <span>
+            <p> We Have Received Your Receiving Request.</p>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success "
+            (click)=" redirectIndentLineList(); modal.dismiss('Cross click')">OK</button>
+
+    </div>
+</ng-template>
