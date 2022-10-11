@@ -24,7 +24,7 @@
                     <td><span [ngClass]="indent.status =='Open' ? 'badge badge-pill badge-danger' : indent.status =='In Progress' ? 'badge badge-pill badge-primary' : 'badge badge-pill badge-info'">{{indent.status}}</span></td>
                     <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
                     <td>Zone1</td>
-                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">View</button> </td>
+                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">{{indent.status=='Closed'?'View' : 'Verify'}}</button> </td>
                 </tr>
             </tbody>
         </table>
@@ -67,14 +67,16 @@
                         <td>  {{indent.item_name}} </td>
                     <td>{{indent.item_qty}}</td>
                     <td>{{indent.item_unit}}</td>
-                    <td><input type="checkbox" [checked]="indent.item_status == 5" (click)="checkboxChange($event,indent)"></td>
+                    <td><input type="checkbox" [checked]="indent.item_status == 5" [disabled]="indentObj.status=='Closed'" (click)="checkboxChange($event,indent)"></td>
                 </tr>
+                <div class="badge badge-pill badge-info" style="margin-top:20px" *ngIf="indentObj.status=='Closed'" >{{indentObj.status}}</div>
             </tbody>
+            
         </table>
     </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="ConfirmationModal(VerifyIndentConfirmBox)">Verify</button>&nbsp;
+        <button type="button" *ngIf="indentObj.status!='Closed'" class="btn btn-success"  (click)="ConfirmationModal(VerifyIndentConfirmBox)">Verify</button>&nbsp;
       <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
     </div>
   </ng-template>

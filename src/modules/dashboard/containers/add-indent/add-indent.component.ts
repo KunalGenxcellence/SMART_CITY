@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IndentService } from '@modules/dashboard/services/indent.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-
+import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'sb-add-indent',
   templateUrl: './add-indent.component.html',
@@ -14,16 +14,18 @@ export class AddIndentComponent implements OnInit {
 
   indentInfo : FormGroup;
   indentOrderTypeId :number = 1;
+  closeModal: String = ""
   isLoading:boolean=false;
   categories = [{name:'Plants',id:'1'},{name:'Equipment',id:'2'},{name:'Chemicals',id:'3'},{name:'Civil Item',id:'4'}];
   itemList = [{name:'Rose',id:'1',category:1},{name:'Marigold',id:'2',category:1},{name:'Lily',id:'3',category:1},
               {name:'Broom',id:'4',category:2},{name:'Plough',id:'5',category:2},{name:'Bagud',id:'6',category:2},
               {name:'Fertilizer',id:'7',category:3},{name:'Pesticides',id:'8',category:3},
               {name:'Cement',id:'9',category:4},{name:'Bricks',id:'10',category:4},{name:'Gravel',id:'11',category:4}];
+              
   ItemDropdown :any=[];
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService, private router:Router,
-    private spinner: NgxSpinnerService){
+    private spinner: NgxSpinnerService, private modalService: NgbModal){
     this.indentInfo = this.formBuilder.group({
       files:[],
       remarks : ['',[Validators.required]],
@@ -88,7 +90,7 @@ export class AddIndentComponent implements OnInit {
     });
   }
 
-  addIndent(){
+  addIndent(modal:any){
     //console.log('data is ', this.indentInfo.value);
     if(!this.indentInfo.valid){
       this.showError();
@@ -104,8 +106,8 @@ export class AddIndentComponent implements OnInit {
           timeOut: 3000,
         });
         this.spinner.hide();
-        this.router.navigate(['dashboard/verifyIndent'])
-      
+       
+        this.confirmationBox(modal);
     },
     error =>{
       this.isLoading=true;
@@ -119,6 +121,24 @@ export class AddIndentComponent implements OnInit {
       }
     });
   }
-
+  private getDismissReason(reason: any): string {
+    if (reason === 1) {
+      return 'by pressing ESC';
+    } else if (reason === 0) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  confirmationBox(content: any) {
+    this.modalService.open(content, {size: 'md',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+    });
+  }
+  redirectIndentLineList(){
+    this.router.navigate(['dashboard/verifyIndent'])
+  }
 
 }

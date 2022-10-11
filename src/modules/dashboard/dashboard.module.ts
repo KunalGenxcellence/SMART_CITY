@@ -28,6 +28,9 @@ import { AddReceivingComponent } from './containers/add-receiving/add-receiving.
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { AddStockComponent } from './containers/add-stock/add-stock.component';
+import { ViewStockComponent } from './containers/view-stock/view-stock.component';
+import { RemoveStockComponent } from './containers/remove-stock/remove-stock.component';
 
 @NgModule({
     imports: [
@@ -41,7 +44,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
         TablesModule,HttpClientModule
     ],
     providers: [...dashboardServices.services, ...dashboardGuards.guards],
-    declarations: [...dashboardContainers.containers, ...dashboardComponents.components, VerifyIndentComponent, ViewRecivingComponent, AddIndentComponent, AddReceivingComponent, SpinnerComponent],
+    declarations: [...dashboardContainers.containers, ...dashboardComponents.components, VerifyIndentComponent, ViewRecivingComponent, AddIndentComponent, AddReceivingComponent, SpinnerComponent, AddStockComponent, ViewStockComponent, RemoveStockComponent],
     exports: [...dashboardContainers.containers, ...dashboardComponents.components],
 })
 export class DashboardModule {}

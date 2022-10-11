@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IndentService } from '@modules/dashboard/services/indent.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { NgbPaginationNumber, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'sb-add-receiving',
@@ -15,6 +16,7 @@ export class AddReceivingComponent implements OnInit {
   indentInfo : FormGroup;
   indentOrderTypeId :number = 2;
   isLoading:boolean=false;
+  closeModal: String = ""
 
   categories = [{name:'Plants',id:'1'},{name:'Equipment',id:'2'},{name:'Chemicals',id:'3'},{name:'Civil Item',id:'4'}];
   itemList = [{name:'Rose',id:'1',category:1},{name:'Marigold',id:'2',category:1},{name:'Lily',id:'3',category:1},
@@ -24,7 +26,8 @@ export class AddReceivingComponent implements OnInit {
   ItemDropdown :any=[];
 
 
-  constructor(private formBuilder : FormBuilder,private toastr: ToastrService, private indentService:IndentService, private router:Router,private spinner: NgxSpinnerService){
+  constructor(private formBuilder : FormBuilder,private toastr: ToastrService, 
+    private indentService:IndentService, private router:Router,private spinner: NgxSpinnerService, private modalService: NgbModal){
     this.indentInfo = this.formBuilder.group({
       files:[],
       remarks : ['',[Validators.required]],
@@ -88,7 +91,7 @@ export class AddReceivingComponent implements OnInit {
   }
 
 
-  addReceiving(){
+  addReceiving(model:any){
 
     //console.log('data is ', this.indentInfo.value);
     if(!this.indentInfo.valid){
@@ -105,7 +108,7 @@ export class AddReceivingComponent implements OnInit {
           timeOut: 3000,
         });
         this.spinner.hide();
-        this.router.navigate(['dashboard/viewReceiving'])
+       this.confirmationBox(model);
       
     },
     error =>{
@@ -120,4 +123,26 @@ export class AddReceivingComponent implements OnInit {
       }
     });
   }
+
+
+  private getDismissReason(reason: any): string {
+    if (reason === 1) {
+      return 'by pressing ESC';
+    } else if (reason === 0) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  confirmationBox(content: any) {
+    this.modalService.open(content, {size: 'md',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+    });
+  }
+  redirectIndentLineList(){
+    this.router.navigate(['dashboard/viewReceiving'])
+  }
+
 }
