@@ -16,4 +16,19 @@ export class SideNavItemComponent implements OnInit {
 
     constructor() {}
     ngOnInit() {}
+
+    HOItemsToHide = ['Add New Indent','Add New Receiving','Add Stock'];
+
+    isMenuItemAllowed(ItemName:string){
+        let userDetails = JSON.parse(localStorage.getItem("user_details") || '{}');
+        if(userDetails['user_type'] == 'Daroga'){
+                return true;
+        }
+        if(userDetails['user_type'] == 'HO'){
+            if(this.HOItemsToHide.indexOf(ItemName) > -1){
+                return false;
+            }
+            return true;
+        }
+    }
 }

@@ -41,7 +41,7 @@ export const sideNavItems: SideNavItems = {
         text: 'Indent',
         submenu: [
             {
-                text: 'Add New Indent ',
+                text: 'Add New Indent',
                 link: '/dashboard/addIndent',
             },
             {
@@ -56,7 +56,7 @@ export const sideNavItems: SideNavItems = {
         text: 'Receiving',
         submenu: [
             {
-                text: 'Add New Receiving ',
+                text: 'Add New Receiving',
                 link: '/dashboard/addReceiving',
             },
             {

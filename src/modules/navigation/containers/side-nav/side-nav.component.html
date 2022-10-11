@@ -3,7 +3,9 @@
         <div class="nav">
             <ng-container *ngFor="let section of sideNavSections"
                 ><div class="sb-sidenav-menu-heading" *ngIf="section.text">{{ section.text }}</div>
-                <ng-container class="text-color-change" *ngFor="let item of section.items"><sb-side-nav-item [sideNavItem]="sideNavItems[item]"></sb-side-nav-item></ng-container
+                <ng-container class="text-color-change" *ngFor="let item of section.items">
+                    <sb-side-nav-item [sideNavItem]="sideNavItems[item]">
+                    </sb-side-nav-item></ng-container
             ></ng-container>
         </div>
     </div>
