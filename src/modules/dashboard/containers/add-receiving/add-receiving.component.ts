@@ -23,7 +23,10 @@ export class AddReceivingComponent implements OnInit {
               {name:'Broom',id:'4',category:2},{name:'Plough',id:'5',category:2},{name:'Bagud',id:'6',category:2},
               {name:'Fertilizer',id:'7',category:3},{name:'Pesticides',id:'8',category:3},
               {name:'Cement',id:'9',category:4},{name:'Bricks',id:'10',category:4},{name:'Gravel',id:'11',category:4}];
+ unitList = [{name:'Nos',id:'1',category:1}, {name:'Nos',id:'2',category:2}, {name:'Kgs',id:'3',category:3}, {name:'Packet',id:'4',category:4}]
+
   ItemDropdown :any=[];
+  unitDropdown :any=[]
 
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, 
@@ -66,6 +69,9 @@ export class AddReceivingComponent implements OnInit {
 
   onCategoryChange(event:any,index:any){
     this.ItemDropdown[index] = this.itemList.filter((item,i)=>{
+      return item['category'] == event;
+    })
+    this.unitDropdown[index] = this.unitList.filter((item,i)=>{
       return item['category'] == event;
     })
   }
@@ -144,5 +150,4 @@ export class AddReceivingComponent implements OnInit {
   redirectIndentLineList(){
     this.router.navigate(['dashboard/viewReceiving'])
   }
-
 }

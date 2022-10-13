@@ -76,9 +76,7 @@
                                                                 <div class="input-group">
                                                                     <select name="unit" id="unit" class="form-control"
                                                                         formControlName="unit">
-                                                                        <option value="1">Nos</option>
-                                                                        <option value="1">Kgs</option>
-                                                                        <option value="1">Packet</option>
+                                                                        <option *ngFor="let item of unitDropdown[i]" [ngValue]="item.id">{{item.name}}</option>
                                                                     </select>
                                                                     <!-- <span *ngIf="(product.get('unit').dirty || product.get('unit').touched) && product.get('unit').errors && product.get('unit').hasError('required')" class="validation">* required</span> -->
                                                                 </div>
