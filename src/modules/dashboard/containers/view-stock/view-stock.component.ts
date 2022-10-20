@@ -29,6 +29,10 @@ export class ViewStockComponent implements OnInit {
   verifiedInddentList: any;
   isApproveAccess: Boolean = true;
   searchText = '';
+
+  categories = [{name:'Plants',id:'1'},{name:'Equipment',id:'2'},{name:'Chemicals',id:'3'},{name:'Civil Item',id:'4'}];
+  itemList = [];
+  ItemDropdown :any=[];
   constructor(
     private indentService: IndentService, private changeDetectorRef: ChangeDetectorRef, private modalService: NgbModal, private toaster: ToastrService,
     private spinner: NgxSpinnerService) {
@@ -176,5 +180,11 @@ export class ViewStockComponent implements OnInit {
       this.spinner.hide();
       this.getIndents(this.currentPage, this.pageSize);
     })
+  }
+  onCategoryChange(event:any,index:any){
+    this.ItemDropdown[index] = this.itemList.filter((item,i)=>{
+      return item['category'] == event;
+    })
+   
   }
 }

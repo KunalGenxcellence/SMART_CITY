@@ -57,7 +57,7 @@
                     <th scope="col"><span>Item</span></th>
                     <th scope="col"><span>Quantity</span></th>
                     <th  scope="col"><span>Unit</span></th>
-                    <th  scope="col"><span>Action</span></th>
+                    <th  scope="col"><span>Have You Received Item?</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -67,7 +67,7 @@
                         <td>  {{indent.item_name}} </td>
                     <td>{{indent.item_qty}}</td>
                     <td>{{indent.item_unit}}</td>
-                    <td><input type="checkbox" [checked]="indent.item_status == 5" [disabled]="indentObj.status=='Closed'" (click)="checkboxChange($event,indent)"></td>
+                    <td style="text-align:center"><input type="checkbox" [checked]="indent.item_status == 5" [disabled]="indentObj.status=='Closed'" (click)="checkboxChange($event,indent)"></td>
                 </tr>
                 <div class="badge badge-pill badge-info" style="margin-top:20px" *ngIf="indentObj.status=='Closed'" >{{indentObj.status}}</div>
             </tbody>
@@ -88,8 +88,15 @@
     </div>
     <div class="modal-body">
 <span>
-    Are you sure you want to proceed ?
+    Have  You Actually Received The Items?
 </span>
+<br>
+<br>
+
+<div *ngFor="let items of createIndentList?.data">
+    <div *ngIf="items.item_status == 5">{{items.item_qty}}   {{items.item_name}}  {{items.item_category}}</div>
+</div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>

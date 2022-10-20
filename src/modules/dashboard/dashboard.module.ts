@@ -41,7 +41,8 @@ import { RemoveStockComponent } from './containers/remove-stock/remove-stock.com
         AppCommonModule,
         NavigationModule,
         ChartsModule,
-        TablesModule,HttpClientModule
+        TablesModule,HttpClientModule,
+        
     ],
     providers: [...dashboardServices.services, ...dashboardGuards.guards],
     declarations: [...dashboardContainers.containers, ...dashboardComponents.components, VerifyIndentComponent, ViewRecivingComponent, AddIndentComponent, AddReceivingComponent, SpinnerComponent, AddStockComponent, ViewStockComponent, RemoveStockComponent],

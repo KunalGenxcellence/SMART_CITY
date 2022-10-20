@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@modules/auth/services';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'sb-login',
@@ -11,43 +13,42 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
 
-    loginInfo : FormGroup
+    loginInfo: FormGroup;
 
-    constructor(private formBuilder : FormBuilder,private router : Router,private toastService:ToastrService) {
+    constructor(private formBuilder: FormBuilder, private router: Router, private toastService: ToastrService,
+        private authService: AuthService, private spinner: NgxSpinnerService) {
         this.loginInfo = this.formBuilder.group({
-            name: ["",[Validators.required]],
-            password: ["",[Validators.required]],
-        })
+            name: ["", [Validators.required]],
+            password: ["", [Validators.required]],
+        });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
-    login(){
-        if(this.loginInfo.invalid){
-            this.toastService.error('Please enter required fields','Error')
+    login() {
+        if (this.loginInfo.invalid) {
+            this.toastService.error('Please enter required fields', 'Error')
             return;
         }
-        let name = this.loginInfo.get('name')?.value;
-        if(name !== null && name.toString() === 'HO'){
-            let userDetails = {
-                name : "HO",
-                user_type : "HO"
-            }
-            window.localStorage.setItem('user_details', JSON.stringify(userDetails));
-        }else{
-            let userDetails = {
-                name : "Zone1",
-                user_type : "Daroga"
-            }
-            window.localStorage.setItem('user_details', JSON.stringify(userDetails));
+        this.spinner.show();
+        let data = this.loginInfo.value;
+        let apiBody = {
+            username: data.name,
+            password: data.password
         }
-        this.toastService.success('Login Successful','Success')
-        this.router.navigate(['/dashboard']);
-        
+        this.authService.login(apiBody).subscribe(res => {
+            console.log(res.user_details);
+            this.spinner.hide();
+            localStorage.setItem('user_details', JSON.stringify(res.user_details));
+            this.toastService.success(res.message);
+            this.router.navigate(['/dashboard']);
+        },
+            error => {
+                this.spinner.hide();
+                this.toastService.error(error.error.message);
+
+            }
+        );
     }
-
-    
-    
-    
-
 }

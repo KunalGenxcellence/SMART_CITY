@@ -16,8 +16,8 @@ export class JwtInterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!request.url.toLocaleLowerCase().includes('/login')){
-    
-    let access_id= localStorage.getItem('user_details') ? JSON.parse(localStorage.getItem("user_details") || '{}').user_type:null;
+
+    let access_id= localStorage.getItem('user_details') ? JSON.parse(localStorage.getItem("user_details") || '{}').user_id:null;
     if(access_id){
 
       request = this.updateRequest(request, access_id);
