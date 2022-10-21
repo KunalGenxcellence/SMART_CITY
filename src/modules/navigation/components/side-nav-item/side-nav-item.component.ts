@@ -21,10 +21,10 @@ export class SideNavItemComponent implements OnInit {
 
     isMenuItemAllowed(ItemName:string){
         let userDetails = JSON.parse(localStorage.getItem("user_details") || '{}');
-        if(userDetails.UserType.UserType == 'Daroga'){
+        if(userDetails.RoleID==3){
                 return true;
         }
-        if(userDetails.UserType.UserType== 'HO'){
+        if(userDetails.RoleID== 2){
             if(this.HOItemsToHide.indexOf(ItemName) > -1){
                 return false;
             }
