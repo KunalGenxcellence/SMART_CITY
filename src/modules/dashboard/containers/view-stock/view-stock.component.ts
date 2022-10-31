@@ -17,19 +17,19 @@ export class ViewStockComponent implements OnInit {
 
   pageSize = 5;
   currentPage = 1;
-  indentListResponse: any;
+  stockListResponse: any;
   indentList: any = [];
   total: number = 0;
-  orderTypeId: number = 1;
+  orderTypeId: number = 3;
   isLoading = false;
   closeModal: string = "";
-  createIndentList: any;
+  stockItemList: any;
   indentObj: any;
-  indentOrderTypeId: number = 1;
+  stockOrderTypeId: number = 1;
   verifiedInddentList: any;
   isApproveAccess: Boolean = true;
   searchText = '';
-
+  selectElement:any;
   categories = [{name:'Plants',id:'1'},{name:'Equipment',id:'2'},{name:'Chemicals',id:'3'},{name:'Civil Item',id:'4'}];
   itemList = [];
   ItemDropdown :any=[];
@@ -43,15 +43,16 @@ export class ViewStockComponent implements OnInit {
     this.isLoading = true;
     //this.changeDetectorRef.detectChanges();
     this.spinner.show();
-    this.getIndents(this.currentPage, this.pageSize);
-    this.getIndentLineItems() 
+    this.getStock(this.currentPage, this.pageSize);
+
   }
 
-  getIndents(page: any, pageSize: any) {
-    let getIndentObj = { ordertype_id: this.orderTypeId, page_no: page, record_limit: pageSize, search_text: this.searchText };
-    this.indentService.getIndent(getIndentObj).subscribe(response => {
-      this.indentListResponse = response;
-      this.total = this.indentListResponse['total_no_of_records'];
+  getStock(page: any, pageSize: any) {
+    let getStockObj = { ordertype_id: this.orderTypeId, page_no: page, record_limit: pageSize, search_text: this.searchText };
+    this.indentService.getAllStock(getStockObj).subscribe(response => {
+      this.stockListResponse = response.data;
+      //console.log(this.stockListResponse)
+      this.total = this.stockListResponse['total_no_of_records'];
       this.isLoading = false;
       this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
@@ -63,57 +64,24 @@ export class ViewStockComponent implements OnInit {
     })
   }
 
-  onSort({ column, direction }: SortEvent) {
-    // this.sortedColumn = column;
-    // this.sortedDirection = direction;
-    // this.countryService.sortColumn = column;
-    // this.countryService.sortDirection = direction;
-    // //this.changeDetectorRef.detectChanges();
-  }
 
   nextPage(page: number) {
-    console.log(page);
+    // console.log(page);
     this.currentPage = page;
     this.isLoading = true;
-    this.indentListResponse = null;
+    this.stockItemList = null;
     //this.changeDetectorRef.detectChanges();
     this.spinner.show();
-    this.getIndents(this.currentPage, this.pageSize);
+    // this.getStockItems()
   }
 
   pageSizeChanged() {
     this.isLoading = true;
-    this.indentListResponse = null;
+    this.stockItemList= null;
     //this.changeDetectorRef.detectChanges();
-    this.spinner.show();
-    this.getIndents(this.currentPage, this.pageSize);
+   this.spinner.show();
+    // this.getStockItems()
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === 1) {
-      return 'by pressing ESC';
-    } else if (reason === 0) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
-  triggerConfirmationModal(content: any) {
-    this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title', centered: true }).result.then((res) => {
-      this.closeModal = `Closed with: ${res}`;
-    }, (res) => {
-      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-    });
-  }
-  ConfirmationModal(content: any) {
-    this.modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', centered: true }).result.then((res) => {
-      this.closeModal = `Closed with: ${res}`;
-    }, (res) => {
-      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-    });
-  }
-
   approveItem() {
     let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
     if (user_details.name === "HO") {
@@ -122,69 +90,49 @@ export class ViewStockComponent implements OnInit {
 
   }
 
-  searchIndent() {
-    if (this.searchText.length == 16) {
-      this.spinner.show();
-      this.getIndents(this.currentPage, this.pageSize);
-    }
-    if (this.searchText.length == 0) {
-      this.spinner.show();
-      this.getIndents(this.currentPage, this.pageSize);
-    }
-  }
-
-  getIndentLineItems() {
-    let createIndent = {
-      order_id: '1',
-      page_no: '1',
-      record_limit: '10'
+  getStockItems() {
+    let userDetails = JSON.parse(localStorage.getItem("user_details") || '{}');
+    let output:any; 
+    this.selectElement = document.getElementById('category');
+    output = this.selectElement.options[this.selectElement.selectedIndex].text
+    // console.log(output);
+    let categoryId:any
+    this.categories.forEach(element=>{
+        if(element.name==output){
+          categoryId=element.id
+        }
+      });
+    let stockItem = {
+      UserID: userDetails.user_id,
+      CategoryID: categoryId,
     };
-
-
     this.spinner.show();
-    this.indentService.getAllIndentItem(createIndent).subscribe(response => {
-      this.createIndentList = response;
+    this.indentService.stockItemList(stockItem).subscribe(response => {
+      this.stockItemList = response;
       this.isLoading = false;
       this.spinner.hide();
-      
-
     }, error => {
-
-      console.log(error);
+     console.log(error);
       this.isLoading = false;
     })
     this.approveItem();
   }
 
-  checkboxChange(value: any, object: any) {
-    if (value.target.checked) {
-      object.item_status = 5;
-    }
-    else {
-      object.item_status = 4;
-    }
-  }
-
-  getcheckedVerified(data: any) {
-    this.spinner.show();
-    let verifyIndentItem = { ordertype_id: this.indentOrderTypeId, data: data };
-    this.indentService.verifyIndentItem(verifyIndentItem).subscribe(response => {
-      this.verifiedInddentList = response;
-      this.isLoading = false;
-      this.toaster.success(this.verifiedInddentList.message)
-      this.modalService.dismissAll();
-      this.getIndents(this.currentPage, this.pageSize);
-    }, error => {
-      console.log(error);
-      this.isLoading = false;
-      this.spinner.hide();
-      this.getIndents(this.currentPage, this.pageSize);
-    })
-  }
   onCategoryChange(event:any,index:any){
     this.ItemDropdown[index] = this.itemList.filter((item,i)=>{
       return item['category'] == event;
     })
    
   }
+  
+  
+  onSort({ column, direction }: SortEvent) {
+    // this.sortedColumn = column;
+    // this.sortedDirection = direction;
+    // this.countryService.sortColumn = column;
+    // this.countryService.sortDirection = direction;
+    // //this.changeDetectorRef.detectChanges();
+  }
+  
+ 
 }

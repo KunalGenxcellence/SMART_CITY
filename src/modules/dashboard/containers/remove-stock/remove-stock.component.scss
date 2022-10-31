@@ -1,0 +1,73 @@
+.container {
+    max-width: 960px;
+}
+
+.main {
+    margin-top: 2rem;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-2r {
+    margin-top: 2rem;
+}
+
+.product-header {
+    font-weight: 500;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.validation {
+    color: red;
+}
+
+.no-border {
+    border: none !important;
+    outline: none !important;
+}
+
+.btn-success {
+    background-color: #1abc9c !important;
+    border-color: #1abc9c !important;
+}
+
+.btn-primary {
+    background-color: #1abc9c !important;
+    border-color: #1abc9c !important;
+}
+
+.card-header {
+    background: #2C3E50 !important;
+    color: #ffffff;
+}
+
+.dash-icon {
+    border: none !important;
+}
+
+.dash-icon {
+    border: none !important;
+    background-color: red !important;
+    border-radius: 5px;
+}
+
+.btn-center-align {
+    margin-bottom: 10px;
+
+}
+
+.modal-text {
+    margin-bottom: 20px;
+}
+
+.text-position {
+    color: #ffffff;
+    background: #2C3E50;
+}

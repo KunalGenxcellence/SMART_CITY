@@ -1,1 +1,167 @@
-<p>remove-stock works!</p>
+<sb-card>
+    <div class="card-header">
+        <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Remove Stock
+    </div>
+    <div class="card-body">
+
+        <div class="">
+            <main class="">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <h4 class="mb-3">Stock Information</h4>
+                        <form [formGroup]="stockInfo" class="needs-validation">
+                            <ul class="list-group">
+                                <li class="list-group-item mb-3" formArrayName="items"
+                                    *ngFor="let product of stockInfo.get('items')['controls']; let i = index;"
+                                    style="border:none !important;padding:unset;">
+                                    <div class="card">
+                                        <div class="card-header ">
+                                            <div class="header-container">
+                                                <span class="product-header">
+                                                    Remove Item {{i+1}}
+                                                </span>
+                                                <div *ngIf="i>0">
+                                                 
+                                                <button class="dash-icon" (click)="hideItem(i)"> 
+                                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-dash" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                      </svg>
+                                                </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div [formGroupName]="i" class="">
+                                                        <div class="row g-3">
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Item category </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="category" id="category"
+                                                                        class="form-control" formControlName="category"
+                                                                        (ngModelChange)="onCategoryChange($event,i)">
+                                                                        <option *ngFor="let category of categories"
+                                                                            [ngValue]="category.id">{{category.name}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('category').dirty || product.get('category').touched) && product.get('category').errors && product.get('category').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Item </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="item_dropdown" id="item"
+                                                                        class="form-control" formControlName="itemName">
+                                                                        <option *ngFor="let item of ItemDropdown[i]"
+                                                                            [ngValue]="item.id">{{item.name}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('itemName').dirty || product.get('itemName').touched) && product.get('itemName').errors && product.get('itemName').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row g-3">
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Quantity</b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <input class="form-control" id="" min="0"
+                                                                        type="number" formControlName="quantity" />
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('quantity').dirty || product.get('quantity').touched) && product.get('quantity').errors && product.get('quantity').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <label class="form-label"><b> Unit(UOM) </b><span
+                                                                        style="color:red">*</span></label>
+                                                                <div class="input-group">
+                                                                    <select name="unit" id="unit" class="form-control"
+                                                                        formControlName="unit">
+                                                                        <option *ngFor="let item of unitDropdown[i]" [ngValue]="item.id">{{item.name}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span
+                                                                    *ngIf="(product.get('unit').dirty || product.get('unit').touched) && product.get('unit').errors && product.get('unit').hasError('required')"
+                                                                    class="validation">* required</span> -->
+                                                            </div>
+
+                                                        </div>
+                               
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Stock
+                                        Item</button>
+                                </div>
+                            </div>
+                            <!-- <button class="w-100 btn btn-primary btn-lg" type="button" (click)="addItem()">Add Stock Item</button> -->
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <label class="form-label"><b> Upload File</b><span
+                                            style="color:red">*</span></label>
+                                    <div class="input-group">
+                                        <input class="form-control no-border" type="file" formControlName="files"
+                                            accept="image/*" capture />
+                                    </div>
+                                    <!-- <span *ngIf="(stockInfo.get('remarks').dirty || stockInfo.get('remarks').touched) && stockInfo.get('remarks').errors && stockInfo.get('remarks').hasError('required')" class="validation">* required</span> -->
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12">
+                                    <label class="form-label"><b> Remove Reason</b><span style="color:red">*</span></label>
+                                    <div class="input-group">
+                                        <textarea formControlName="remarks" class="w-100"></textarea>
+                                    </div>
+                                    <span
+                                        *ngIf="(stockInfo.get('remarks').dirty || stockInfo.get('remarks').touched) && stockInfo.get('remarks').errors && stockInfo.get('remarks').hasError('required')"
+                                        class="validation">* required</span>
+                                </div>
+                            </div>
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm mr-2"
+                                        (click)="confirmationBox(VerifyIndentConfirmBox)">Remove</button>
+                                    <button type="button" class="btn btn-secondary btn-sm mr-2">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</sb-card>
+
+<ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
+    <div class=" text-position ">
+        <h5 class="text-center" style="margin-top: 15px; margin-bottom: 15px;"><b>Thank You </b></h5>
+    </div>
+    <div class="modal-body text-center">
+        <span>
+            <p> Are You sure, Do You Want To Remove Item From Stock List?.</p>
+        </span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+            (click)=" modal.dismiss('Cross click')">No</button>
+        <button type="button" class="btn btn-success "
+            (click)="removeStock(); modal.dismiss('Cross click')">Yes</button>
+    </div>
+</ng-template>

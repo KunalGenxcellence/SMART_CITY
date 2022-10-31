@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddStockComponent implements OnInit {
   stockInfo: FormGroup;
-  indentOrderTypeId: number = 3;
+  stockOrderTypeId: number = 3;
   isLoading: boolean = false;
   categories = [{ name: 'Plants', id: '1' }, { name: 'Equipment', id: '2' }, { name: 'Chemicals', id: '3' }, { name: 'Civil Item', id: '4' }];
   itemList = [{ name: 'Rose', id: '1', category: 1 }, { name: 'Marigold', id: '2', category: 1 }, { name: 'Lily', id: '3', category: 1 },
@@ -98,11 +98,11 @@ export class AddStockComponent implements OnInit {
       return this.stockInfo
     }
     let stockData = this.stockInfo.value;
-    stockData['ordertype_id'] = this.indentOrderTypeId;
+    stockData['ordertype_id'] = this.stockOrderTypeId;
     stockData['created_by'] = 1;
     this.isLoading = true;
     this.spinner.show();
-    this.indentService.saveIndent(stockData).subscribe(response => {
+    this.indentService.createStock(stockData).subscribe(response => {
       this.toastr.success('Stock Created Succesfully.', '', {
         timeOut: 3000,
       });

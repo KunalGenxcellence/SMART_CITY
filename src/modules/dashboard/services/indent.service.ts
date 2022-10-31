@@ -32,4 +32,21 @@ export class IndentService {
   {
     return this.httpClient.post(this.baseUrl+'verify-indentitem',data) 
   }
+  createStock(data:any)
+  {
+    return this.httpClient.post<any>(this.baseUrl+'create-stock',data)
+  }
+  getAllStock(data:any)
+  {
+    return this.httpClient.post<any>(this.baseUrl+'get-all-stock',data)
+  }
+  stockItemList(data:any)
+  {
+    return this.httpClient.post<any>(this.baseUrl+'get-all-stocksummary',data)
+  }
+
+  removeStock(data:any)
+  {
+    return this.httpClient.post<any>(this.baseUrl+'remove-stock',data)
+  }
 }
