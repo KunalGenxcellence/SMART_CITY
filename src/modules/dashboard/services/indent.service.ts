@@ -49,4 +49,9 @@ export class IndentService {
   {
     return this.httpClient.post<any>(this.baseUrl+'remove-stock',data)
   }
+  getalluserstocksummery(data:any){
+      return this.httpClient.post<any>(this.baseUrl+'get-all-userstocksummery',data)
+    }
+
+
 }

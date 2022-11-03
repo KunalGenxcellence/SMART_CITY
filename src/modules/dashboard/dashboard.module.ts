@@ -31,6 +31,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AddStockComponent } from './containers/add-stock/add-stock.component';
 import { ViewStockComponent } from './containers/view-stock/view-stock.component';
 import { RemoveStockComponent } from './containers/remove-stock/remove-stock.component';
+import { StockDetailsComponent } from './containers/stock-details/stock-details.component';
 
 @NgModule({
     imports: [
@@ -55,7 +56,8 @@ import { RemoveStockComponent } from './containers/remove-stock/remove-stock.com
         SpinnerComponent,
         AddStockComponent,
         ViewStockComponent,
-        RemoveStockComponent],
+        RemoveStockComponent,
+        StockDetailsComponent],
     exports: [...dashboardContainers.containers, ...dashboardComponents.components],
 })
 export class DashboardModule { }

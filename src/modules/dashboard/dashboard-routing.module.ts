@@ -18,6 +18,7 @@ import { AddStockComponent } from './containers/add-stock/add-stock.component';
 import { ViewStockComponent } from './containers/view-stock/view-stock.component';
 import { RemoveStockComponent } from './containers/remove-stock/remove-stock.component';
 import { LayoutDashboardComponent } from '@modules/navigation/layouts/layout-dashboard/layout-dashboard.component';
+import { StockDetailsComponent } from './containers/stock-details/stock-details.component';
 
 /* Routes */
 export const ROUTES: Routes = [
@@ -32,7 +33,8 @@ export const ROUTES: Routes = [
             {path:'addStock', component: AddStockComponent},
             {path:'viewStock', component:ViewStockComponent},
             {path:'removeStock', component:RemoveStockComponent},
-            {path:'dashboard',   component:DashboardComponent}
+            {path:'dashboard',   component:DashboardComponent},
+            {path:'stockDetails/:userId/:categoryId', component: StockDetailsComponent}
         ]
     },
 

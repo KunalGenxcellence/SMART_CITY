@@ -1,0 +1,30 @@
+<sb-card>
+    <div class="card-header"></div>
+<div class="card-body">
+    <form>
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S No.</th>
+                    <th scope="col"><span>CategoryName</span></th>
+                    <th scope="col"><span>ItemName</span></th>
+                    <th scope="col"><span>Qty</span></th>
+                    <th scope="col"><span>Unit</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stockData of data1 let i=index">
+                    <td scope="row">{{i+1}}</td>
+                    <td>{{stockData.CategoryName}}</td>
+                    <td>{{stockData.ItemName}}</td>
+                    <td>{{stockData.Qty}}</td>
+                    <td>{{stockData.Unit}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </form>
+        
+    </div>
+</sb-card>

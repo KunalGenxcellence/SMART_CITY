@@ -1,45 +1,30 @@
 <h1>Dashboard</h1>
 
 
-<sb-card>
-    <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "user"]'></fa-icon>User Details</div>
+<sb-card *ngFor="let userData of allUserdetails">
+    <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "user"]'></fa-icon>{{userData.UserName}}</div>
 <div class="card-body">
     <form>
-        <div class="form-group form-inline">Search By <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchText" (keyup)="searchIndent()"/>
-            <span class="ml-3" *ngIf="this.isLoading">Loading...</span>
-        </div>
         <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">S No.</th>
-                    <th scope="col"><span>Indent ID</span></th>
-                    <th scope="col"><span>Status</span></th>
-                    <th scope="col"><span>Date of Indent</span></th>
-                    <th scope="col"><span>Creator Id</span></th>
-                    <th  scope="col"><span>Action</span></th>
+                    <th scope="col"><span>Category</span></th>
+                    <th scope="col"><span>Quantity</span></th>
+                    <th class="text-center" scope="col"><span>Action</span></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let indent of indentListResponse?.data">
-                    <td scope="row">{{ indent.sno }}</td>
-                    <td><b><ngb-highlight [result]="indent.OrderNo"></ngb-highlight></b></td>
-                    <td><span [ngClass]="indent.status =='Open' ? 'badge badge-pill badge-danger' : indent.status =='In Progress' ? 'badge badge-pill badge-primary' : 'badge badge-pill badge-info'">{{indent.status}}</span></td>
-                    <td><ngb-highlight [result]="indent.date"></ngb-highlight></td>
-                    <td>Zone1</td>
-                    <td><button type="button"  class="btn btn-success" (click)="getIndentLineItems(indent.OrderID,VerifyIndent,indent)">{{indent.status=='Closed'?'View' : 'Verify'}}</button> </td>
+                <tr *ngFor="let stockData of  userData.stock , let i=index ">
+                    <td scope="row">{{i+1}}</td>
+                    <td>{{stockData?.CategoryName}}</td>
+                    <td>{{stockData?.Qty}}</td>
+                    <td class="text-center"><button class="btn btn-success" (click)="viewStockDetails(stockData)">View Stock Details</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
-        <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="total" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="nextPage($event)"></ngb-pagination
-            ><select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize" (change)="pageSizeChanged()">
-                <option [ngValue]="5">5 items per page</option>
-                <option [ngValue]="10">10 items per page</option>
-                <option [ngValue]="20">20 items per page</option>
-            </select>
-        </div>
     </form>
         
     </div>

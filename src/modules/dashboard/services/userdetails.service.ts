@@ -12,7 +12,7 @@ export class UserdetailsService {
     this.baseUrl=environment.apiBaseUrl+'/api/';
   }
   getAllUserDetails(){
-    return this.httpClient.get(this.baseUrl+'get-all-user')
+    return this.httpClient.get<any>(this.baseUrl+'get-all-user')
   }
 
 }
