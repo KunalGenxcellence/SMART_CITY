@@ -20,16 +20,17 @@ export class RemoveStockComponent implements OnInit {
   { name: 'Broom', id: '4', category: 2 }, { name: 'Plough', id: '5', category: 2 }, { name: 'Bagud', id: '6', category: 2 },
   { name: 'Fertilizer', id: '7', category: 3 }, { name: 'Pesticides', id: '8', category: 3 },
   { name: 'Cement', id: '9', category: 4 }, { name: 'Bricks', id: '10', category: 4 }, { name: 'Gravel', id: '11', category: 4 }];
- 
-  unitList = [{name:'Nos',id:'1',category:1}, {name:'Nos',id:'2',category:2}, {name:'Kgs',id:'3',category:3}, {name:'Packet',id:'4',category:4}]
 
-  
+  unitList = [{ name: 'Nos', id: '1', category: 1 }, { name: 'Nos', id: '2', category: 2 }, { name: 'Kgs', id: '3', category: 3 },
+              { name: 'Packet', id: '4', category: 4 }]
+
+
   ItemDropdown: any = [];
-  unitDropdown :any=[]
-  closeModal:any;
+  unitDropdown: any = []
+  closeModal: any;
 
-  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private indentService: IndentService, private router: Router,
-    private spinner: NgxSpinnerService, private modalService: NgbModal) {
+  constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private indentService: IndentService, 
+    private router: Router, private spinner: NgxSpinnerService, private modalService: NgbModal) {
     this.stockInfo = this.formBuilder.group({
       files: [],
       remarks: ['', [Validators.required]],
@@ -62,7 +63,7 @@ export class RemoveStockComponent implements OnInit {
     this.ItemDropdown[index] = this.itemList.filter((item, i) => {
       return item['category'] == event;
     });
-    this.unitDropdown[index] = this.unitList.filter((item,i)=>{
+    this.unitDropdown[index] = this.unitList.filter((item, i) => {
       return item['category'] == event;
     });
   }
@@ -112,12 +113,7 @@ export class RemoveStockComponent implements OnInit {
         this.isLoading = true;
         console.log(error);
         this.spinner.hide();
-        if (error.error) {
-          console.log(error.message);
-          this.toastr.error(error.message, '', {
-            timeOut: 3000,
-          });
-        }
+        this.toastr.error(error.error.message);
       });
   }
   private getDismissReason(reason: any): string {
@@ -126,7 +122,7 @@ export class RemoveStockComponent implements OnInit {
     } else if (reason === 0) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
   confirmationBox(content: any) {
@@ -134,13 +130,11 @@ export class RemoveStockComponent implements OnInit {
       this.showError();
       return this.stockInfo
     }
-    this.modalService.open(content, {size: 'md',ariaLabelledBy: 'modal-basic-title',centered: true}).result.then((res) => {
+    this.modalService.open(content, { size: 'md', ariaLabelledBy: 'modal-basic-title', centered: true }).result.then((res) => {
       this.closeModal = `Closed with: ${res}`;
     }, (res) => {
       this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
     });
   }
  
-
-
 }

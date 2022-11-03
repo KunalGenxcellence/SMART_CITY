@@ -19,23 +19,8 @@ export const sideNavItems: SideNavItems = {
     dashboard: {
         icon: 'tachometer-alt',
         text: 'Dashboard',
-        link: '/dashboard',
+        link: '/dashboard/dashboard',
     },
-
-    // layouts: {
-    //     icon: 'columns',
-    //     text: 'Layouts',
-    //     submenu: [
-    //         {
-    //             text: 'Static Navigation',
-    //             link: '/dashboard/static',
-    //         },
-    //         {
-    //             text: 'Light Sidenav',
-    //             link: '/dashboard/light',
-    //         },
-    //     ],
-    // },
     layouts: {
         icon: 'columns',
         text: 'Indent',

@@ -11,66 +11,68 @@ import * as dashboardContainers from './containers';
 
 /* Guards */
 import * as dashboardGuards from './guards'
-import { VerifyIndentComponent, ViewRecivingComponent } from './containers';
+import { DashboardComponent, VerifyIndentComponent, ViewRecivingComponent } from './containers';
 import { AddIndentComponent } from './containers/add-indent/add-indent.component';
 import { AddReceivingComponent } from './containers/add-receiving/add-receiving.component';
 import { AddStockComponent } from './containers/add-stock/add-stock.component';
 import { ViewStockComponent } from './containers/view-stock/view-stock.component';
 import { RemoveStockComponent } from './containers/remove-stock/remove-stock.component';
+import { LayoutDashboardComponent } from '@modules/navigation/layouts/layout-dashboard/layout-dashboard.component';
 
 /* Routes */
 export const ROUTES: Routes = [
     {
         path: '',
         canActivate: [],
-        component: dashboardContainers.DashboardComponent, children:[
+        component: LayoutDashboardComponent, children:[
             {path:'verifyIndent', component: VerifyIndentComponent}, 
             {path:'viewReceiving', component:ViewRecivingComponent},
             {path:'addIndent', component:AddIndentComponent},
             {path:'addReceiving', component:AddReceivingComponent},
             {path:'addStock', component: AddStockComponent},
             {path:'viewStock', component:ViewStockComponent},
-            {path:'removeStock', component:RemoveStockComponent}
+            {path:'removeStock', component:RemoveStockComponent},
+            {path:'dashboard',   component:DashboardComponent}
         ]
     },
 
 
-    {
-        path: 'static',
-        data: {
-            title: 'Smart-City',
-            breadcrumbs: [
-                {
-                    text: 'Dashboard',
-                    link: '/dashboard',
-                },
-                {
-                    text: 'Static',
-                    active: true,
-                },
-            ],
-        } as SBRouteData,
-        canActivate: [],
-        component: dashboardContainers.StaticComponent,
-    },
-    {
-        path: 'light',
-        data: {
-            title: 'Smart-City',
-            breadcrumbs: [
-                {
-                    text: 'Dashboard',
-                    link: '/dashboard',
-                },
-                {
-                    text: 'Light',
-                    active: true,
-                },
-            ],
-        } as SBRouteData,
-        canActivate: [],
-        component: dashboardContainers.LightComponent,
-    },
+    // {
+    //     path: 'static',
+    //     data: {
+    //         title: 'Smart-City',
+    //         breadcrumbs: [
+    //             {
+    //                 text: 'Dashboard',
+    //                 link: '/dashboard',
+    //             },
+    //             {
+    //                 text: 'Static',
+    //                 active: true,
+    //             },
+    //         ],
+    //     } as SBRouteData,
+    //     canActivate: [],
+    //     component: dashboardContainers.StaticComponent,
+    // },
+    // {
+    //     path: 'light',
+    //     data: {
+    //         title: 'Smart-City',
+    //         breadcrumbs: [
+    //             {
+    //                 text: 'Dashboard',
+    //                 link: '/dashboard',
+    //             },
+    //             {
+    //                 text: 'Light',
+    //                 active: true,
+    //             },
+    //         ],
+    //     } as SBRouteData,
+    //     canActivate: [],
+    //     component: dashboardContainers.LightComponent,
+    // },
     // {
     //     path: 'verifyIndent',
     //     data: {

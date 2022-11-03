@@ -111,8 +111,10 @@ export class ViewStockComponent implements OnInit {
       this.stockItemList = response;
       this.isLoading = false;
       this.spinner.hide();
+      this.toaster.success(response.message);
     }, error => {
-     console.log(error);
+      this.spinner.hide();
+      this.toaster.error(error.error.message);
       this.isLoading = false;
     })
     this.approveItem();
