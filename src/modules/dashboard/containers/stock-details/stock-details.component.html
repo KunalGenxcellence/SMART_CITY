@@ -1,5 +1,5 @@
 <sb-card>
-    <div class="card-header"></div>
+    <div class="card-header">Category:&nbsp; {{categoryname}}</div>
 <div class="card-body">
     <form>
         <div class="table-responsive">
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let stockData of data1 let i=index">
+                <tr *ngFor="let stockData of stockDataInfo let i=index">
                     <td scope="row">{{i+1}}</td>
                     <td>{{stockData.CategoryName}}</td>
                     <td>{{stockData.ItemName}}</td>

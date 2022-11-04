@@ -12,7 +12,8 @@ export class StockDetailsComponent implements OnInit {
 userId:any;
 categoryId:any;
 stockDetails=[];
-data1:any
+stockDataInfo=[];
+categoryname:any;
   constructor(private route: ActivatedRoute, private indentService: IndentService,  private spinner: NgxSpinnerService,) {}
 
     ngOnInit() {
@@ -22,7 +23,7 @@ data1:any
               this.userId= params['userId'];
               this.categoryId= params['categoryId'];
               this. getdetails(params['userId'], params['categoryId'] ); 
-              console.log(this.categoryId,this.userId);
+              // console.log(this.categoryId,this.userId);
             }
           );
         }
@@ -39,8 +40,14 @@ data1:any
      
          this.stockDetails = res.data;
          this.stockDetails.forEach(element => {
-        this.data1=element['stock'];
-        console.log(this.data1)
+          this.stockDataInfo=element['stock'];
+
+          this.stockDataInfo.forEach(element => {
+            this.categoryname=element['CategoryName']
+            console.log(element['CategoryName'])
+            
+          });
+        // console.log(this.stockDataInfo)
         this.spinner.hide();
        });
         
