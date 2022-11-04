@@ -28,6 +28,10 @@ export class RemoveStockComponent implements OnInit {
   ItemDropdown: any = [];
   unitDropdown: any = []
   closeModal: any;
+  file:any;
+  imageUrl:any
+  image:any;
+  imageName:any;
 
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private indentService: IndentService, 
     private router: Router, private spinner: NgxSpinnerService, private modalService: NgbModal) {
@@ -101,6 +105,7 @@ export class RemoveStockComponent implements OnInit {
     let stockData = this.stockInfo.value;
     stockData['ordertype_id'] = this.stockOrderTypeId;
     stockData['created_by'] = 1;
+    stockData['files'] = "http://13.235.181.17/upload/"+this.image
     this.isLoading = true;
     this.spinner.show();
     this.indentService.removeStock(stockData).subscribe(response => {
@@ -135,6 +140,30 @@ export class RemoveStockComponent implements OnInit {
     }, (res) => {
       this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
     });
+  }
+
+  onUpload() {
+    const formData = new FormData();
+    formData.append("imageUrl", this.imageUrl);
+    // let data={
+    //   imageUrl:this.imageUrl
+    // }
+    this.indentService.upload(formData).subscribe(res=>{
+      this.image=res.data
+      this.toastr.success(res.message);
+    }, error=>
+    {
+      this.toastr.error(error.error.message);
+    }
+    );
+}
+  onChange(event:any){
+      this.file = event.target.files[0];
+      this.imageUrl=this.file;
+      this.imageName=this.file.name;
+
+      this.onUpload();
+      
   }
  
 }

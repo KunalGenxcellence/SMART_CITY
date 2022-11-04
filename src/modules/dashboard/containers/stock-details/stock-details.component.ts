@@ -44,10 +44,9 @@ categoryname:any;
 
           this.stockDataInfo.forEach(element => {
             this.categoryname=element['CategoryName']
-            console.log(element['CategoryName'])
+            // console.log(element['CategoryName'])
             
           });
-        // console.log(this.stockDataInfo)
         this.spinner.hide();
        });
         

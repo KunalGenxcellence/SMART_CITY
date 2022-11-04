@@ -26,7 +26,11 @@ export class AddReceivingComponent implements OnInit {
  unitList = [{name:'Nos',id:'1',category:1}, {name:'Nos',id:'2',category:2}, {name:'Kgs',id:'3',category:3}, {name:'Packet',id:'4',category:4}]
 
   ItemDropdown :any=[];
-  unitDropdown :any=[]
+  unitDropdown :any=[];
+  file:any;
+  imageUrl:any
+  image:any;
+  imageName:any;
 
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, 
@@ -108,6 +112,7 @@ export class AddReceivingComponent implements OnInit {
     let indentData = this.indentInfo.value;
     indentData['ordertype_id'] = this.indentOrderTypeId;
     indentData['created_by'] = 2;
+    indentData['files'] = "http://13.235.181.17/upload/"+this.image
     this.isLoading=true;
     this.indentService.saveIndent(indentData).subscribe(response=>{
         this.toastr.success('Indent Created Succesfully.', '', {
@@ -150,4 +155,26 @@ export class AddReceivingComponent implements OnInit {
   redirectIndentLineList(){
     this.router.navigate(['dashboard/viewReceiving'])
   }
+  onUpload() {
+    const formData = new FormData();
+    formData.append("imageUrl", this.imageUrl);
+    // let data={
+    //   imageUrl:this.imageUrl
+    // }
+    this.indentService.upload(formData).subscribe(res=>{
+      this.image=res.data
+      this.toastr.success(res.message);
+    }, error=>
+    {
+      this.toastr.error(error.error.message);
+    }
+    );
+}
+  onChange(event:any){
+      this.file = event.target.files[0];
+      this.imageUrl=this.file;
+      this.imageName=this.file.name;
+      this.onUpload();
+     
+ }
 }
