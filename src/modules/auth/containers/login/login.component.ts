@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
             this.spinner.hide();
             localStorage.setItem('user_details', JSON.stringify(res.user_details));
             this.toastService.success(res.message);
-            this.router.navigate(['/dashboard/dashboard']);
+            this.router.navigate(['/dashboard']);
         },
             error => {
                 this.spinner.hide();

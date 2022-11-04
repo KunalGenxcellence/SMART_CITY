@@ -33,7 +33,7 @@ export const ROUTES: Routes = [
             {path:'addStock', component: AddStockComponent},
             {path:'viewStock', component:ViewStockComponent},
             {path:'removeStock', component:RemoveStockComponent},
-            {path:'dashboard',   component:DashboardComponent},
+            {path:'',   component:DashboardComponent},
             {path:'stockDetails/:userId/:categoryId', component: StockDetailsComponent}
         ]
     },
