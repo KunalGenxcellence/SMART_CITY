@@ -13,9 +13,12 @@ import { ToastrService } from 'ngx-toastr';
 export class DashboardComponent implements OnInit {
 
     allUserdetails: any;
+    userDetail:any;
     constructor(private userdetails: UserdetailsService, private toaster:ToastrService, private spinner: NgxSpinnerService, private router:Router) { }
     ngOnInit() { 
         this.getUserDetails();
+        this.userDetail = JSON.parse(localStorage.getItem("user_details") || '{}');
+        console.log(this.userDetail.user_id)
     }
 
 
