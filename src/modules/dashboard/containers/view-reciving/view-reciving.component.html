@@ -58,7 +58,7 @@
                       <th scope="col"><span>Item</span></th>
                       <th scope="col"><span>Quantity</span></th>
                       <th  scope="col"><span>Unit</span></th>
-                      <th  scope="col"><span>Action</span></th>
+                      <th  scope="col"><span>Have you received the items ?</span></th>
                   </tr>
               </thead>
               <tbody>
@@ -83,12 +83,12 @@
 
   <ng-template class="confirm-box bottom:0" #VerifyIndentConfirmBox let-modal>
     <div class="modal-header">
-      <h4 class="modal-title">INDENT - {{receivingObj.OrderNo}}</h4>
+      <h4 class="modal-title">RECEIVING - {{receivingObj.OrderNo}}</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
     </div>
     <div class="modal-body">
 <span>
-    Are you sure you want to proceed ?
+    Have you actually received the items ?
 </span>
     </div>
     <div class="modal-footer">
