@@ -110,7 +110,7 @@ ConfirmationModal(content: any) {
 
 approveItem(){
   let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
-  if(user_details.name === "HO"){
+  if(user_details.UserName=== "HO"){
     this.isApproveAccess = false;
   }else{
     this.isApproveAccess = true;
