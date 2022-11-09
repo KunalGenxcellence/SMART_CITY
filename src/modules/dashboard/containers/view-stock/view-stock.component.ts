@@ -20,12 +20,11 @@ export class ViewStockComponent implements OnInit {
   stockListResponse: any;
   indentList: any = [];
   total: number = 0;
-  orderTypeId: number = 3;
   isLoading = false;
   closeModal: string = "";
   stockItemList: any;
   indentObj: any;
-  stockOrderTypeId: number = 1;
+  stockOrderTypeId: number = 2;
   verifiedInddentList: any;
   isApproveAccess: Boolean = true;
   searchText = '';
@@ -42,17 +41,17 @@ export class ViewStockComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     //this.changeDetectorRef.detectChanges();
-    this.spinner.show();
-    this.getStock(this.currentPage, this.pageSize);
+    // this.spinner.show();
+    // this.getStock(this.currentPage, this.pageSize);
 
   }
 
   getStock(page: any, pageSize: any) {
-    let getStockObj = { ordertype_id: this.orderTypeId, page_no: page, record_limit: pageSize, search_text: this.searchText };
+    let getStockObj = { ordertype_id: this.stockOrderTypeId, page_no: page, record_limit: pageSize, search_text: this.searchText };
     this.indentService.getAllStock(getStockObj).subscribe(response => {
       this.stockListResponse = response.data;
       //console.log(this.stockListResponse)
-      this.total = this.stockListResponse['total_no_of_records'];
+      // this.total = this.stockListResponse['total_no_of_records'];
       this.isLoading = false;
       this.spinner.hide();
       //this.changeDetectorRef.detectChanges();
@@ -72,7 +71,7 @@ export class ViewStockComponent implements OnInit {
     this.stockItemList = null;
     //this.changeDetectorRef.detectChanges();
     this.spinner.show();
-    // this.getStockItems()
+    this.getStockItems()
   }
 
   pageSizeChanged() {
@@ -80,14 +79,7 @@ export class ViewStockComponent implements OnInit {
     this.stockItemList= null;
     //this.changeDetectorRef.detectChanges();
    this.spinner.show();
-    // this.getStockItems()
-  }
-  approveItem() {
-    let user_details = JSON.parse(localStorage.getItem("user_details") || '{}');
-    if (user_details.name === "HO") {
-      this.isApproveAccess = false;
-    }
-
+    this.getStockItems()
   }
 
   getStockItems() {
@@ -104,11 +96,15 @@ export class ViewStockComponent implements OnInit {
       });
     let stockItem = {
       UserID: userDetails.user_id,
-      CategoryID: categoryId,
+      CategoryID: Number(categoryId),
+      page_no:this.currentPage,
+      record_limit:this.pageSize
+
     };
     this.spinner.show();
     this.indentService.stockItemList(stockItem).subscribe(response => {
       this.stockItemList = response;
+      this.total = this.stockItemList['total_no_of_records'];
       this.isLoading = false;
       this.spinner.hide();
       this.toaster.success(response.message);
@@ -117,7 +113,7 @@ export class ViewStockComponent implements OnInit {
       this.toaster.error(error.error.message);
       this.isLoading = false;
     })
-    this.approveItem();
+    // this.approveItem();
   }
 
   onCategoryChange(event:any,index:any){

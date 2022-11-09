@@ -14,6 +14,7 @@ categoryId:any;
 stockDetails=[];
 stockDataInfo=[];
 categoryname:any;
+useName:any;
   constructor(private route: ActivatedRoute, private indentService: IndentService,  private spinner: NgxSpinnerService,) {}
 
     ngOnInit() {
@@ -44,6 +45,7 @@ categoryname:any;
 
           this.stockDataInfo.forEach(element => {
             this.categoryname=element['CategoryName']
+            this.useName=element['UserName'];
             // console.log(element['CategoryName'])
             
           });

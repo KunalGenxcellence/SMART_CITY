@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class RemoveStockComponent implements OnInit {
 
   stockInfo: FormGroup;
-  stockOrderTypeId: number = 3;
+  stockOrderTypeId: number = 2;
   isLoading: boolean = false;
   categories = [{ name: 'Plants', id: '1' }, { name: 'Equipment', id: '2' }, { name: 'Chemicals', id: '3' }, { name: 'Civil Item', id: '4' }];
   itemList = [{ name: 'Rose', id: '1', category: 1 }, { name: 'Marigold', id: '2', category: 1 }, { name: 'Lily', id: '3', category: 1 },
@@ -28,10 +28,13 @@ export class RemoveStockComponent implements OnInit {
   ItemDropdown: any = [];
   unitDropdown: any = []
   closeModal: any;
-  file:any;
-  imageUrl:any
-  image:any;
-  imageName:any;
+  file: any;
+  imageUrl: any
+  image = [];
+  imageName: any;
+  myFiles: any = [];
+  image1: any
+  createId=2;
 
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService, private indentService: IndentService, 
     private router: Router, private spinner: NgxSpinnerService, private modalService: NgbModal) {
@@ -102,21 +105,22 @@ export class RemoveStockComponent implements OnInit {
     //   this.showError();
     //   return this.stockInfo
     // }
+    let userDetails = JSON.parse(localStorage.getItem("user_details") || '{}');
     let stockData = this.stockInfo.value;
     stockData['ordertype_id'] = this.stockOrderTypeId;
-    stockData['created_by'] = 1;
-    stockData['files'] = "http://13.235.181.17/upload/"+this.image
+    stockData['created_by'] = userDetails.user_id==1?1:2;
+    stockData['files'] = this.image;
     this.isLoading = true;
     this.spinner.show();
     this.indentService.removeStock(stockData).subscribe(response => {
       this.toastr.success(response.message);
       this.spinner.hide();
+      this.router.navigate(['dashboard/viewStock'])
       // this.confirmationBox(model);
 
     },
       error => {
         this.isLoading = true;
-        console.log(error);
         this.spinner.hide();
         this.toastr.error(error.error.message);
       });
@@ -143,27 +147,23 @@ export class RemoveStockComponent implements OnInit {
   }
 
   onUpload() {
-    const formData = new FormData();
-    formData.append("imageUrl", this.imageUrl);
-    // let data={
-    //   imageUrl:this.imageUrl
-    // }
-    this.indentService.upload(formData).subscribe(res=>{
-      this.image=res.data
+    const frmData = new FormData();
+    for (var i = 0; i < this.myFiles.length; i++) {
+      frmData.append("imageUrl[]", this.myFiles[i]);
+    }
+    this.indentService.upload(frmData).subscribe(res => {
+      this.image = res.data;
       this.toastr.success(res.message);
-    }, error=>
-    {
+    }, error => {
       this.toastr.error(error.error.message);
     }
     );
-}
-  onChange(event:any){
-      this.file = event.target.files[0];
-      this.imageUrl=this.file;
-      this.imageName=this.file.name;
-
-      this.onUpload();
-      
+  }
+  onChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+    this.onUpload();
   }
  
 }

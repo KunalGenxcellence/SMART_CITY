@@ -27,10 +27,12 @@ export class AddReceivingComponent implements OnInit {
 
   ItemDropdown :any=[];
   unitDropdown :any=[];
-  file:any;
-  imageUrl:any
-  image:any;
-  imageName:any;
+  file: any;
+  imageUrl: any
+  image = [];
+  imageName: any;
+  myFiles: any = [];
+  image1: any
 
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService, 
@@ -102,8 +104,6 @@ export class AddReceivingComponent implements OnInit {
 
 
   addReceiving(model:any){
-
-    //console.log('data is ', this.indentInfo.value);
     if(!this.indentInfo.valid){
       this.showError();
       return this.indentInfo
@@ -112,7 +112,7 @@ export class AddReceivingComponent implements OnInit {
     let indentData = this.indentInfo.value;
     indentData['ordertype_id'] = this.indentOrderTypeId;
     indentData['created_by'] = 2;
-    indentData['files'] = "http://13.235.181.17/upload/"+this.image
+    indentData['files'] = this.image;
     this.isLoading=true;
     this.indentService.saveIndent(indentData).subscribe(response=>{
         this.toastr.success('Indent Created Succesfully.', '', {
@@ -156,25 +156,22 @@ export class AddReceivingComponent implements OnInit {
     this.router.navigate(['dashboard/viewReceiving'])
   }
   onUpload() {
-    const formData = new FormData();
-    formData.append("imageUrl", this.imageUrl);
-    // let data={
-    //   imageUrl:this.imageUrl
-    // }
-    this.indentService.upload(formData).subscribe(res=>{
-      this.image=res.data
+    const frmData = new FormData();
+    for (var i = 0; i < this.myFiles.length; i++) {
+      frmData.append("imageUrl[]", this.myFiles[i]);
+    }
+    this.indentService.upload(frmData).subscribe(res => {
+      this.image = res.data;
       this.toastr.success(res.message);
-    }, error=>
-    {
+    }, error => {
       this.toastr.error(error.error.message);
     }
     );
-}
-  onChange(event:any){
-      this.file = event.target.files[0];
-      this.imageUrl=this.file;
-      this.imageName=this.file.name;
-      this.onUpload();
-     
- }
+  }
+  onChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+    this.onUpload();
+  }
 }

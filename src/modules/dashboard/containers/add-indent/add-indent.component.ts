@@ -25,10 +25,12 @@ export class AddIndentComponent implements OnInit {
               
   ItemDropdown :any=[];
   unitDropdown:any=[];
-  file:any;
-  imageUrl:any
-  image:any;
-  imageName:any;
+  file: any;
+  imageUrl: any
+  image = [];
+  imageName: any;
+  myFiles: any = [];
+  image1: any
 
   constructor(private formBuilder : FormBuilder,private toastr: ToastrService,private indentService:IndentService, private router:Router,
     private spinner: NgxSpinnerService, private modalService: NgbModal){
@@ -78,12 +80,6 @@ export class AddIndentComponent implements OnInit {
       unit:['', [Validators.required]],
     }));
   }
-
-  // createCustomerInfo(){
-  //   console.log('data is ', this.customerInfo.value);
-  //   this.customerInfo.markAllAsTouched();
-  // }
-
   setDefaultData(){
     this.defaultData();
   }
@@ -108,7 +104,7 @@ export class AddIndentComponent implements OnInit {
     let indentData = this.indentInfo.value;
     indentData['ordertype_id'] = this.indentOrderTypeId;
     indentData['created_by'] = 1;
-    indentData['files'] = "http://13.235.181.17/upload/"+this.image
+    indentData['files'] =  this.image;
     this.isLoading=true;
     this.spinner.show();
     this.indentService.saveIndent(indentData).subscribe(response=>{
@@ -121,7 +117,6 @@ export class AddIndentComponent implements OnInit {
     },
     error =>{
       this.isLoading=true;
-      console.log(error);
       this.spinner.hide();
       if(error.error){
         this.toastr.error(error.message, '', {
@@ -151,23 +146,24 @@ export class AddIndentComponent implements OnInit {
   }
 
   onUpload() {
-    const formData = new FormData();
-    formData.append("imageUrl", this.imageUrl);
-    this.indentService.upload(formData).subscribe(res=>{
-      this.image=res.data
+    const frmData = new FormData();
+    for (var i = 0; i < this.myFiles.length; i++) {
+      frmData.append("imageUrl[]", this.myFiles[i]);
+    }
+    this.indentService.upload(frmData).subscribe(res => {
+      this.image = res.data;
       this.toastr.success(res.message);
-    }, error=>
-    {
+    }, error => {
       this.toastr.error(error.error.message);
     }
     );
-}
-  onChange(event:any){
-    this.file = event.target.files[0];
-    this.imageUrl=this.file;
-    this.imageName=this.file.name;
+  }
+  onChange(event: any) {
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
     this.onUpload();
-    
-}
+
+  }
 
 }
